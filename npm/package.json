@@ -1,0 +1,50 @@
+{
+  "name": "@arf/java-common",
+  "version": "0.0.1",
+  "description": "Common Java code generation utilities",
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "files": [
+    "lib",
+    "testlib"
+  ],
+  "dependencies": {
+    "handlebars": "^4.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0",
+    "yeoman-assert": "^2.2.2",
+    "yeoman-test": "^1.6.0",
+    "istanbul": "^0.4.5",
+    "standard-version": "^4.0.0"
+  },
+  "scripts": {
+    "test": "mocha test/unit/*",
+    "coverage": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha test/unit/*",
+    "istanbul": "./node_modules/istanbul/lib/cli.js",
+    "prerelease": "npm test && npm run testint",
+    "release": "standard-version"
+  },
+  "publishConfig": {
+    "registry": "https://npm-registry.whitewater.ibm.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.ibm.com:arf/java-codegen-common"
+  },
+  "keywords": [
+    "arf",
+    "JavaEE",
+    "codegen",
+    "yeoman",
+    "generator",
+    "YaaS",
+    "java",
+    "liberty",
+    "spring"
+  ],
+  "contributors": [
+    "Adam Pilkington",
+    "Kate Stanley"
+  ]
+}
