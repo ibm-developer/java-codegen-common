@@ -71,6 +71,10 @@ test_maven.prototype.assertNoDependency = function(scope, groupId, artifactId, v
   });
 }
 
+test_maven.prototype.getCompileCommand = function() {
+  return 'mvn test-compile'; //compiles the main and test classes
+}
+
 var constructRegex = function(scope, groupId, artifactId, version, exclusions) {
   groupId = groupId.replace(/\./g, '\\.');
   artifactId = artifactId.replace(/\./g, '\\.');

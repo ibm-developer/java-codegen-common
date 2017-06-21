@@ -75,6 +75,10 @@ test_gradle.prototype.assertNoDependency = function(scopeName, groupId, artifact
   });
 }
 
+test_gradle.prototype.getCompileCommand = function() {
+  return 'gradle compileTestJava'; //compiles the main and test classes
+}
+
 var constructRegex = function(scope, groupId, artifactId, version, exclusions) {
   groupId = groupId.replace(/\./g, '\\.');
   artifactId = artifactId.replace(/\./g, '\\.');
