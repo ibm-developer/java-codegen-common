@@ -20,7 +20,7 @@
 'use strict';
 
 function test(build) {
-  var test_build = require('./testlib/test-' + build);
+  var test_build = require('./lib/test-' + build);
   return new test_build();
 }
 
