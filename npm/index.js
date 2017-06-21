@@ -29,7 +29,7 @@ module.exports = {
   context : require('./lib/context'),
   control : require('./lib/control'),
   fsprocessor : require('./lib/fsprocessor'),
-  helpers : require('./lib/helpers'),
+  handlebars : require('./lib/helpers').handlebars,
   javarules : require('./lib/javarules'),
   log : require('./lib/log'),
   test : test

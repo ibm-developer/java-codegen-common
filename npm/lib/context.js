@@ -21,7 +21,7 @@ const processor = require("./fsprocessor");
 const Control = require('./control');
 const extend = require('extend');
 const Config = require("./config");
-const Handlebars = require('handlebars');
+const Handlebars = require('./helpers').handlebars;
 
 
 function Context(id, config, promptmgr) {
