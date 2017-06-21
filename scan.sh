@@ -1,0 +1,14 @@
+mkdir -p ../docs/scan
+WORKING_DIR=`pwd`
+echo "Current workingDir is $WORKING_DIR"
+mkdir ./production
+cd ./production
+git clone git@github.ibm.com:arf/java-codegen-common.git
+cd ./java-codegen-common/npm
+npm install --only=production
+npm install @ibm/osc-cli -g
+echo "Running scan"
+osc-cli -s . -o -u travisci@travis.ibm.com
+cd $WORKING_DIR
+echo "Copying scan results file to ../docs"
+cp ./production/java-codegen-common/npm/npm_scanresults* ../docs/scan
