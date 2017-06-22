@@ -70,9 +70,15 @@ Config.prototype.processProject = function(paths) {
     var template = fs.readFileSync(this.configFiles[i], 'utf8');
     var compiledTemplate = Handlebars.compile(template);
     var output = compiledTemplate(this);
-    var fileContent = eval("(" + output + ")");
-    for(var array in fileContent) {
-      this.processArray(fileContent, array);
+    try {
+      var fileContent = eval("(" + output + ")");
+      for(var array in fileContent) {
+        this.processArray(fileContent, array);
+      }
+    } catch(err) {
+      console.error('Error reading ' + this.configFiles[i] + ' : ' + err.message);
+      console.error('code : ' + output);
+      throw err;
     }
   }
 }

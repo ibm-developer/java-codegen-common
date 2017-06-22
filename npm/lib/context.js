@@ -76,7 +76,7 @@ function Context(id, config, promptmgr) {
 
   this.addJNDIEntries = (entries) => {
     if(!entries) return;   //nothing to add
-    if (!Array.isArray(paths)) {
+    if (!Array.isArray(entries)) {
       throw 'Entries is not an array, it is ' + JSON.stringify(entries);
     }
     //merge an array of JNDI entries into the internal config object
@@ -98,7 +98,7 @@ function Context(id, config, promptmgr) {
 
   this.addEnvEntries = (entries) => {
     if(!entries) return;   //nothing to add
-    if (!Array.isArray(paths)) {
+    if (!Array.isArray(entries)) {
       throw 'Entries is not an array, it is ' + JSON.stringify(entries);
     }
     //merge an array of JNDI entries into the internal config object
