@@ -21,7 +21,7 @@
     "test": "mocha test/unit/*",
     "coverage": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha test/unit/*",
     "istanbul": "./node_modules/istanbul/lib/cli.js",
-    "prerelease": "npm test && npm run testint",
+    "prerelease": "npm test",
     "release": "standard-version"
   },
   "publishConfig": {
