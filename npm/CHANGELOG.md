@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.0"></a>
+# [0.2.0](https://github.ibm.com/arf/java-codegen-common/compare/v0.1.0...v0.2.0) (2017-07-03)
+
+
+### Features
+
+* **test:** Add assertNoContent to Maven and Gradle tests ([ec27614](https://github.ibm.com/arf/java-codegen-common/commit/ec27614))
+
+
+
 <a name="0.1.0"></a>
 # 0.1.0 (2017-06-22)
 
