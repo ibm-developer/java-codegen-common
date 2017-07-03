@@ -53,10 +53,15 @@ test_maven.prototype.assertProperty = function(name, value) {
 }
 
 test_maven.prototype.assertContent = function(value) {
-  it(BUILD_FILE + ' contains content a value of ' + value, function() {
+  it(BUILD_FILE + ' contains file content ' + value, function() {
     assert.fileContent(BUILD_FILE, value);
   });
+}
 
+test_maven.prototype.assertNoContent = function(value) {
+  it(BUILD_FILE + ' does not contain file content ' + value, function() {
+    assert.noFileContent(BUILD_FILE, value);
+  });
 }
 
 test_maven.prototype.assertDependency = function(scope, groupId, artifactId, version, exclusions) {

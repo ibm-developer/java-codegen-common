@@ -55,10 +55,15 @@ test_gradle.prototype.assertProperty = function(name, value) {
 }
 
 test_gradle.prototype.assertContent = function(value) {
-  it('build.gradle contains content a value of ' + value, function() {
+  it(BUILD_FILE + ' contains file content ' + value, function() {
     assert.fileContent(BUILD_FILE, value);
   });
+}
 
+test_gradle.prototype.assertNoContent = function(value) {
+  it(BUILD_FILE + ' does not contain file content ' + value, function() {
+    assert.noFileContent(BUILD_FILE, value);
+  });
 }
 
 test_gradle.prototype.assertDependency = function(scopeName, groupId, artifactId, version, exclusions) {
