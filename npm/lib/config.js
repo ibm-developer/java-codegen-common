@@ -79,8 +79,8 @@ Config.prototype.addDependencies = function(deps) {
 Config.prototype.addFrameworkDependencies = function(deps) {
   if(deps) {
     //merge an array of dependencies into the internal config object
-    var found = false;
     deps.forEach(dep => {
+      var found = false;
       //see if there is a conflict with existing deps
       this.frameworkDependencies.forEach(existing => {
         var f1 = existing.feature.split('-');
@@ -102,8 +102,8 @@ Config.prototype.addFrameworkDependencies = function(deps) {
 
 Config.prototype.addKeyValue = (entries, values) => {
   if(entries) {
-    var found = false;
     entries.forEach(entry => {
+      var found = false;
       //see if there is a conflict with existing entry
       values.forEach(existing => {
         if(existing.name === entry.name) {
