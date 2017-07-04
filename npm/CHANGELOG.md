@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.0"></a>
+# [1.0.0](https://github.ibm.com/arf/java-codegen-common/compare/v0.2.0...v1.0.0) (2017-07-04)
+
+
+### Bug Fixes
+
+* **config:** correctly add all items to config ([4ce9e8c](https://github.ibm.com/arf/java-codegen-common/commit/4ce9e8c))
+
+
+### Features
+
+* **config:** move deps to config from context ([d39bc52](https://github.ibm.com/arf/java-codegen-common/commit/d39bc52))
+
+
+### BREAKING CHANGES
+
+* **config:** methods moved from context to config.
+
+Signed off by : Adam Pilkington apilkington@uk.ibm.com
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.ibm.com/arf/java-codegen-common/compare/v0.1.0...v0.2.0) (2017-07-03)
 
