@@ -18,16 +18,11 @@
 
 var fs = require('fs');
 var fspath = require('path');
-var Handlebars = require('handlebars');
+var Handlebars = require('./helpers.js').handlebars;
 
 const PATTERN_NAME = new RegExp("^[a-zA-Z0-9_-]+$");
 const PATTERN_ARTIFACT_ID = new RegExp("^[a-zA-Z0-9-_.]*$");
 const CONFIG_FILE = "config.js";
-
-function Config(defaults) {
-  this.defaults = defaults || { get : ()=>[]};
-  this.reset();
-};    //the configuration object
 
 Config.prototype.isValid = function() {
   var value = this.appName;
@@ -59,7 +54,94 @@ Config.prototype.apply = function(options) {
   }
 }
 
-Config.prototype.processProject = function(paths) {
+Config.prototype.addDependencies = function(deps) {
+  if(deps) {
+    //merge an array of dependencies into the internal config object
+    deps.forEach(dep => {
+      //see if there is a conflict with existing deps
+      var found = false;
+      this.dependencies.forEach(existing => {
+        if((existing.groupId === dep.groupId) && (existing.artifactId === dep.artifactId)) {
+          //groupId and artifactId match, so need to check other details
+          if((existing.version === dep.version) && (existing.scope === dep.scope)) {
+            found = true;
+            return;   //exact duplicates are fine, so stop checking
+          }
+          throw 'Dependency conflict, existing : ' + JSON.stringify(existing) + ', new : ' + JSON.stringify(dep);
+        }
+      });
+      if (!found) this.dependencies.push(dep);
+    });
+  }
+  return this.dependencies;
+}
+
+Config.prototype.addFrameworkDependencies = function(deps) {
+  if(deps) {
+    //merge an array of dependencies into the internal config object
+    var found = false;
+    deps.forEach(dep => {
+      //see if there is a conflict with existing deps
+      this.frameworkDependencies.forEach(existing => {
+        var f1 = existing.feature.split('-');
+        var f2 = dep.feature.split('-');
+        if(f1[0] === f2[0]) {
+          //feature name matches so need to check other details
+          if(f1[1] === f2[1]) {
+            found = true;
+            return;   //exact version duplicates are fine, so stop checking
+          }
+          throw 'Framework dependency conflict, existing : ' + JSON.stringify(existing) + ', new : ' + JSON.stringify(dep);
+        }
+      });
+      if(!found) this.frameworkDependencies.push(dep);
+    });
+  }
+  return this.frameworkDependencies;
+}
+
+Config.prototype.addKeyValue = (entries, values) => {
+  if(entries) {
+    var found = false;
+    entries.forEach(entry => {
+      //see if there is a conflict with existing entry
+      values.forEach(existing => {
+        if(existing.name === entry.name) {
+          //names match so have to check the values
+          if(existing.value === entry.value) {
+            found = true;
+            return;   //exact duplicates are fine, so stop checking
+          }
+          throw 'Entry conflict, existing : ' + JSON.stringify(existing) + ', new : ' + JSON.stringify(entry);
+        }
+      });
+      if(!found) values.push(entry);
+    });
+  }
+  return values;
+}
+
+function Config(defaults) {
+  this.defaults = defaults || { get : ()=>[]};
+  this.dependencies = [];
+  this.envEntries = [];
+  this.jndiEntries = [];
+  this.properties = [];
+  this.frameworkDependencies = [];
+
+  this.addProperties = (entries) => {;
+    this.addKeyValue(entries, this.properties);
+  }
+
+  this.addJndiEntries = (entries) => {
+    this.addKeyValue(entries, this.jndiEntries);
+  }
+
+  this.addEnvEntries = (entries) => {
+    this.addKeyValue(entries, this.envEntries);
+  }
+
+  this.processProject = (paths) => {
   for(var i = 0; i < paths.length; i++) {
     var file = fspath.resolve(paths[i], CONFIG_FILE);
     if(fs.existsSync(file)) {
@@ -73,25 +155,30 @@ Config.prototype.processProject = function(paths) {
     try {
       var fileContent = eval("(" + output + ")");
       for(var array in fileContent) {
-        this.processArray(fileContent, array);
+        var data = fileContent[array];
+        if (!Array.isArray(data)) {
+          throw 'Data is not an array, it is ' + JSON.stringify(data);
+        }
+        if(!this[array]) {
+          throw array + ' is not a recognised array';
+        }
+        var name = array.charAt(0).toUpperCase() + array.substr(1);
+        var func = this['add' + name].bind(this);
+        if(func) {
+          func(data);
+        } else {
+          throw 'Internal error - no matching function for [add' + name + ']';
+        }
       }
     } catch(err) {
-      console.error('Error reading ' + this.configFiles[i] + ' : ' + err.message);
+      console.error('Error reading ' + this.configFiles[i] + ' : ' + err);
       console.error('code : ' + output);
       throw err;
     }
   }
 }
 
-Config.prototype.processArray = function(content, objectsName) {
-  for(var i = 0; i < content[objectsName].length; i++) {
-    var object = content[objectsName][i];
-    if(this[objectsName]) {
-      this[objectsName].push(object);
-    } else {
-      this[objectsName] = [object];
-    }
-  }
-}
+  this.reset();
+};    //the configuration object
 
 module.exports = exports = Config;

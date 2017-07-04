@@ -226,18 +226,24 @@ describe('Config file processing', function() {
     var templatePath = [path.resolve("./test/resources/config/with-config")];
     config.processProject(templatePath);
     assert(config.frameworkDependencies)
-    assert.equal(config.frameworkDependencies[0].name, 'testFrameworkDep');
+    assert.equal(config.frameworkDependencies[0].feature, 'testFrameworkDep-1.0');
   });
   it('it should add the framework dependencies from all config files', function() {
     var config = new Config();
     var templatePath = [path.resolve("./test/resources/config/with-config"), path.resolve("./test/resources/config/with-other-config")];
     config.processProject(templatePath);
-    var dependencies = [config.frameworkDependencies[0].name];
+    var dependencies = [config.frameworkDependencies[0].feature];
     for(var i = 1; i < config.frameworkDependencies.length; i++) {
-      dependencies.push(config.frameworkDependencies[i].name);
+      dependencies.push(config.frameworkDependencies[i].feature);
     }
     assert.equal(dependencies.length, 2)
-    assert(dependencies.includes('testFrameworkDep'), 'dependencies=' + dependencies);
-    assert(dependencies.includes('testOtherFrameworkDep'), 'dependencies=' + dependencies);
+    assert(dependencies.includes('testFrameworkDep-1.0'), 'dependencies=' + dependencies);
+    assert(dependencies.includes('testOtherFrameworkDep-1.0'), 'dependencies=' + dependencies);
   });
+  it('should throw an exception for an unrecognised entry in config.js', function() {
+    var config = new Config();
+    var templatePath = [path.resolve("./test/resources/config/with-invalid-config")];
+    assert.throws(() => {config.processProject(templatePath)}, 'Did not throw an exception for an unknown config entry');
+  });
+
 });
