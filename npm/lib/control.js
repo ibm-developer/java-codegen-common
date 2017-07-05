@@ -69,7 +69,7 @@ Control.prototype.processProject = function() {
 
   //it does, so parse it in and run it through Handlebars
   var template = fs.readFileSync(file, 'utf8');
-  logger.writeToLog("Config data for controlBlock", this.config);
+  logger.writeToLog("Config data for controlBlock " + file, this.config);
   var compiledTemplate = Handlebars.compile(template);
   var output = compiledTemplate(this.config);
   try {
