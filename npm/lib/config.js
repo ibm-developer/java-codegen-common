@@ -20,6 +20,8 @@ var fs = require('fs');
 var fspath = require('path');
 var Handlebars = require('./helpers.js').handlebars;
 
+const logger = require('./log');
+
 const PATTERN_NAME = new RegExp("^[a-zA-Z0-9_-]+$");
 const PATTERN_ARTIFACT_ID = new RegExp("^[a-zA-Z0-9-_.]*$");
 const CONFIG_FILE = "config.js";
@@ -43,7 +45,7 @@ Config.prototype.reset = function() {
   this.configFiles = [];
 }
 
-Config.prototype.apply = function(options) {
+Config.prototype.overwrite = function(options) {
   //clone any property, only if it is already present in the target object
   for (var prop in this) {
     if (this.hasOwnProperty(prop)) {
@@ -52,6 +54,18 @@ Config.prototype.apply = function(options) {
         }
     }
   }
+}
+
+Config.prototype.addMissing = function(options, defaults) {
+  //add properties that are not currently present and have matching default values, do not overwrite existing
+  if(defaults == undefined) {
+    throw new Error('addMissing expects defaults to be a defined');
+  }
+  defaults.get().forEach(key => {
+    if(this[key] === undefined) {
+      this[key] = options[key] || defaults.get(key);
+    }
+  });
 }
 
 Config.prototype.addDependencies = function(deps) {
@@ -141,42 +155,43 @@ function Config(defaults) {
     this.addKeyValue(entries, this.envEntries);
   }
 
-  this.processProject = (paths) => {
-  for(var i = 0; i < paths.length; i++) {
-    var file = fspath.resolve(paths[i], CONFIG_FILE);
-    if(fs.existsSync(file)) {
-      this.configFiles.push(file);
-    }
-  }
-  for(var i = 0; i < this.configFiles.length; i++) {
-    var template = fs.readFileSync(this.configFiles[i], 'utf8');
-    var compiledTemplate = Handlebars.compile(template);
-    var output = compiledTemplate(this);
-    try {
-      var fileContent = eval("(" + output + ")");
-      for(var array in fileContent) {
-        var data = fileContent[array];
-        if (!Array.isArray(data)) {
-          throw 'Data is not an array, it is ' + JSON.stringify(data);
-        }
-        if(!this[array]) {
-          throw array + ' is not a recognised array';
-        }
-        var name = array.charAt(0).toUpperCase() + array.substr(1);
-        var func = this['add' + name].bind(this);
-        if(func) {
-          func(data);
-        } else {
-          throw 'Internal error - no matching function for [add' + name + ']';
-        }
+  this.processProject = function(paths) {
+    for(var i = 0; i < paths.length; i++) {
+      var file = fspath.resolve(paths[i], CONFIG_FILE);
+      logger.writeToLog('Processing config file ' + file + ' with config', this);
+      if(fs.existsSync(file)) {
+        this.configFiles.push(file);
       }
-    } catch(err) {
-      console.error('Error reading ' + this.configFiles[i] + ' : ' + err);
-      console.error('code : ' + output);
-      throw err;
+    }
+    for(var i = 0; i < this.configFiles.length; i++) {
+      var template = fs.readFileSync(this.configFiles[i], 'utf8');
+      var compiledTemplate = Handlebars.compile(template);
+      var output = compiledTemplate(this);
+      try {
+        var fileContent = eval("(" + output + ")");
+        for(var array in fileContent) {
+          var data = fileContent[array];
+          if (!Array.isArray(data)) {
+            throw 'Data is not an array, it is ' + JSON.stringify(data);
+          }
+          if(!this[array]) {
+            throw array + ' is not a recognised array';
+          }
+          var name = array.charAt(0).toUpperCase() + array.substr(1);
+          var func = this['add' + name].bind(this);
+          if(func) {
+            func(data);
+          } else {
+            throw 'Internal error - no matching function for [add' + name + ']';
+          }
+        }
+      } catch(err) {
+        console.error('Error reading ' + this.configFiles[i] + ' : ' + err);
+        console.error('code : ' + output);
+        throw err;
+      }
     }
   }
-}
 
   this.reset();
 };    //the configuration object
