@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.0"></a>
+# [1.1.0](https://github.ibm.com/arf/java-codegen-common/compare/v1.0.0...v1.1.0) (2017-07-05)
+
+
+### Bug Fixes
+
+* **config:** Fix config this scope error ([5df845b](https://github.ibm.com/arf/java-codegen-common/commit/5df845b))
+
+
+### Features
+
+* **config:** Add addMissing function to config ([b486d2d](https://github.ibm.com/arf/java-codegen-common/commit/b486d2d))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.ibm.com/arf/java-codegen-common/compare/v0.2.0...v1.0.0) (2017-07-04)
 
