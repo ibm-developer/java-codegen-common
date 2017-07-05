@@ -155,7 +155,7 @@ function Config(defaults) {
     this.addKeyValue(entries, this.envEntries);
   }
 
-  this.processProject = (paths) => {
+  this.processProject = function(paths) {
     for(var i = 0; i < paths.length; i++) {
       var file = fspath.resolve(paths[i], CONFIG_FILE);
       logger.writeToLog('Processing config file ' + file + ' with config', this);
