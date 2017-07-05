@@ -261,7 +261,7 @@ describe('Config file processing', function() {
   });
   it('should be possible to update the config and have processing see the updates', function() {
     var config = new Config(require('../lib/defaults'));
-    var templatePath = [path.resolve("./test/resources/config/with-config")];
+    var templatePath = [path.resolve("./test/resources/config/with-dependent-config")];
     config.deployType = 'customDeploy';
     config.processProject(templatePath);
     assert.equal(config.properties[0].name, 'testName');
