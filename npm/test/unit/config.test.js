@@ -34,13 +34,13 @@ describe('Config behaviour', function() {
   it('should be possible to replace default config with options', function(){
     var config = new Config(require('../lib/defaults'));
     var options = {appName : 'testName'};
-    config.apply(options);
+    config.overwrite(options);
     assert.equal(config.appName, 'testName');
   });
   it('should be possible to replace default config arrays with options', function(){
     var config = new Config(require('../lib/defaults'));
     var options = {technologies : ['rest', 'websocket']};
-    config.apply(options);
+    config.overwrite(options);
     assert.equal(config.technologies.length, 2);
     assert.equal(config.technologies[0], 'rest');
     assert.equal(config.technologies[1], 'websocket');
@@ -48,14 +48,28 @@ describe('Config behaviour', function() {
   it('should be possible to replace default config arrays with empty array options', function(){
     var config = new Config(require('../lib/defaults'));
     var options = {technologies : []};
-    config.apply(options);
+    config.overwrite(options);
     assert.equal(config.technologies.length, 0);
   });
-  it('should not be possible to create config with options', function(){
+  it('should not be possible to create config using overwrite', function(){
     var config = new Config(require('../lib/defaults'));
     var options = {someConfig : 'someValue'};
-    config.apply(options);
+    config.overwrite(options);
     assert.equal(config.someConfig, undefined);
+  });
+  it('should be possible to add missing options using addMissing', function(){
+    var config = new Config();
+    var defaults = require('../lib/defaults');
+    var options = {someConfig : 'someValue', createType : 'newCreateType'};
+    assert.equal(config.createType, undefined);
+    config.addMissing(options, defaults);
+    assert.equal(config.createType, 'newCreateType');
+    assert.equal(config.someConfig, undefined);
+  });
+  it('should not be possible to call addMissing with undefined defaults', function(){
+    var config = new Config();
+    var options = {someConfig : 'someValue'};
+    assert.throws(() => {config.addMissing(options, undefined)}, /addMissing expects defaults to be a defined/, 'Did not throw an exception for unknown defaults object');
   });
 });
 
@@ -244,6 +258,14 @@ describe('Config file processing', function() {
     var config = new Config();
     var templatePath = [path.resolve("./test/resources/config/with-invalid-config")];
     assert.throws(() => {config.processProject(templatePath)}, 'Did not throw an exception for an unknown config entry');
+  });
+  it('should be possible to update the config and have processing see the updates', function() {
+    var config = new Config(require('../lib/defaults'));
+    var templatePath = [path.resolve("./test/resources/config/with-config")];
+    config.deployType = 'customDeploy';
+    config.processProject(templatePath);
+    assert.equal(config.properties[0].name, 'testName');
+    assert.equal(config.properties[0].value, 'testValue');
   });
 
 });
