@@ -14,24 +14,18 @@
  * limitations under the License.
  */
 
+//module for storing default configuration values
 
-//exports so that the common libraries can be accessed
+const defaultModule = require('../../../lib/defaults');
 
-'use strict';
-
-function test(build) {
-  var test_build = require('./lib/test-' + build);
-  return new test_build();
+const DEFAULTS = {
+    appName : {desc : 'Name of the application', type : String, default : 'testName'},
+    buildType : {desc : 'Build system to use', type : String, default : 'testBuildType'}
 }
 
-module.exports = {
-  config : require('./lib/config'),
-  context : require('./lib/context'),
-  control : require('./lib/control'),
-  fsprocessor : require('./lib/fsprocessor'),
-  handlebars : require('./lib/helpers').handlebars,
-  javarules : require('./lib/javarules'),
-  log : require('./lib/log'),
-  defaults : require('./lib/defaults'),
-  test : test
+module.exports = class extends defaultModule {
+    constructor() {
+        super(DEFAULTS);
+    }
+
 }
