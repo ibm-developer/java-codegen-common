@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0"></a>
+# [2.0.0](https://github.ibm.com/arf/java-codegen-common/compare/v1.1.0...v2.0.0) (2017-07-06)
+
+
+### Features
+
+* **config:** Add defaults module ([36fa6c4](https://github.ibm.com/arf/java-codegen-common/commit/36fa6c4))
+* **config:** Remove toObject method and add handlebars ([1befe11](https://github.ibm.com/arf/java-codegen-common/commit/1befe11))
+* **defaults:** Add defaults module ([55ca373](https://github.ibm.com/arf/java-codegen-common/commit/55ca373))
+* **infrastructure:** Add integration tests to travis ([37c0121](https://github.ibm.com/arf/java-codegen-common/commit/37c0121))
+
+
+### BREAKING CHANGES
+
+* **defaults:** new defaults module
+
+Signed-off-by: Katherine Stanley <katheris@uk.ibm.com>
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.ibm.com/arf/java-codegen-common/compare/v1.0.0...v1.1.0) (2017-07-05)
 
