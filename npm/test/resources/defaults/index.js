@@ -17,8 +17,9 @@
 //mock generator
 
 var Generator = require('yeoman-generator');
-var defaultsModule = require('../../../lib/defaults');
-var defaults = new defaultsModule(require('./defaults.js').getDefaults());
+var Defaults = require('./defaults.js');
+
+var defaults = new Defaults();
 
 module.exports = class extends Generator {
   constructor(args, opts) {
@@ -28,7 +29,7 @@ module.exports = class extends Generator {
 
   writing() {
     this.fs.copyTpl(
-      this.templatePath('options.txt'), this.destinationPath('options.txt'), JSON.stringify(this.options)
+      this.templatePath('options.txt'), this.destinationPath('options.txt'), {appName: this.options['appName'], buildType: this.options['buildType']}
     )
   }
 }

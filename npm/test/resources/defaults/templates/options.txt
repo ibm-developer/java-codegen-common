@@ -1,1 +1,2 @@
-<%= options %>
+appName=<%= appName %>
+buildType=<%= buildType %>

@@ -18,18 +18,18 @@
 
 var assert = require('assert');
 var helpers = require('yeoman-test');
-var defaultsModule = require('../../lib/defaults');
+var Defaults = require('../resources/defaults/defaults.js');
 var path = require('path');
 
-var defaults = new defaultsModule(require('../resources/defaults/defaults.js').getDefaults());
+var defaults = new Defaults();
 
 describe('Defaults module', function() {
   describe('Call getDefault to get the default object', function() {
     var appName = defaults.getObject('appName');
     var buildType = defaults.getObject('buildType');
     it('can get the default value', function() {
-      assert.equal(appName.default, 'LibertyProject');
-      assert.equal(buildType.default, 'maven');
+      assert.equal(appName.default, 'testName');
+      assert.equal(buildType.default, 'testBuildType');
     });
     it('can get the description', function() {
       assert.equal(appName.desc, 'Name of the application');
@@ -41,8 +41,8 @@ describe('Defaults module', function() {
     });
   });
   it('can use getDefaultValue to get the default value', function() {
-    assert.equal(defaults.get('appName'), 'LibertyProject');
-    assert.equal(defaults.get('buildType'), 'maven');
+    assert.equal(defaults.get('appName'), 'testName');
+    assert.equal(defaults.get('buildType'), 'testBuildType');
   });
   describe('Call getDefaults to get a list of config values with defaults', function() {
     var defaultValues = defaults.get();
@@ -61,14 +61,6 @@ describe('Defaults module', function() {
     });
     it('finds buildType in the list of config values with defaults', function() {
       assert(foundBuildType);
-    });
-  });
-  describe('Call setOptions to expose the defaults as Yeoman options', function() {
-    it('sets the defaults as options on the generator', function() {
-      helpers.run(path.join(__dirname, '../resources/defaults'))
-        .then(function() {
-          assert.fileContent('options.txt', 'something')
-        });
     });
   });
 })

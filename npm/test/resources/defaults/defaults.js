@@ -16,11 +16,16 @@
 
 //module for storing default configuration values
 
-var getDefaults = function() {
-    return {appName : {desc : 'Name of the application', type : String, default : 'LibertyProject'},
-    buildType : {desc : 'Build system to use', type : String, default : 'maven'}};
+const defaultModule = require('../../../lib/defaults');
+
+const DEFAULTS = {
+    appName : {desc : 'Name of the application', type : String, default : 'testName'},
+    buildType : {desc : 'Build system to use', type : String, default : 'testBuildType'}
 }
 
-module.exports = {
-  getDefaults : getDefaults
+module.exports = class extends defaultModule {
+    constructor() {
+        super(DEFAULTS);
+    }
+
 }

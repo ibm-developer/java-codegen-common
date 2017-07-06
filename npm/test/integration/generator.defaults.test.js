@@ -14,24 +14,21 @@
  * limitations under the License.
  */
 
+// test the defaults module
 
-//exports so that the common libraries can be accessed
+var assert = require('assert');
+var helpers = require('yeoman-test');
+var path = require('path');
 
-'use strict';
+beforeEach(function() {
+    return helpers.run(path.join(__dirname, '../resources/defaults'));
+})
 
-function test(build) {
-  var test_build = require('./lib/test-' + build);
-  return new test_build();
-}
-
-module.exports = {
-  config : require('./lib/config'),
-  context : require('./lib/context'),
-  control : require('./lib/control'),
-  fsprocessor : require('./lib/fsprocessor'),
-  handlebars : require('./lib/helpers').handlebars,
-  javarules : require('./lib/javarules'),
-  log : require('./lib/log'),
-  defaults : require('./lib/defaults'),
-  test : test
-}
+describe('Defaults module', function() {
+  describe('Call setOptions to expose the defaults as Yeoman options', function() {
+    it('sets the defaults as options on the generator', function() {
+        assert.fileContent('options.txt', 'appName=testName');
+        assert.fileContent('options.txt', 'buildType=testBuildType');
+    });
+  });
+})
