@@ -16,8 +16,11 @@
 
 //mock generator
 
-var Generator = require('yeoman-generator');
-var Defaults = require('./defaults.js');
+const Generator = require('yeoman-generator');
+const Defaults = require('./defaults.js');
+const Handlebars = require('handlebars');
+const fs = require('fs');
+const fspath = require('path');
 
 var defaults = new Defaults();
 
@@ -28,8 +31,10 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    this.fs.copyTpl(
-      this.templatePath('options.txt'), this.destinationPath('options.txt'), {appName: this.options['appName'], buildType: this.options['buildType']}
-    )
+    var file = fspath.resolve(this.templatePath('options.txt'));
+    var contents = fs.readFileSync(file, 'utf8');
+    var compileTemplate = Handlebars.compile(contents);
+    var output = compileTemplate(this.options);
+    this.fs.write(this.destinationPath('options.txt'), output);
   }
 }

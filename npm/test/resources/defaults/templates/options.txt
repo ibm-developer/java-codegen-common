@@ -1,2 +1,2 @@
-appName=<%= appName %>
-buildType=<%= buildType %>
+appName={{appName}}
+buildType={{buildType}}

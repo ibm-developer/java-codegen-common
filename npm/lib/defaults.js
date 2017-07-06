@@ -34,16 +34,6 @@ class Defaults {
     }
   }
 
-  toObject(value) {
-    if(typeof value == 'string') {
-      return JSON.parse(value);
-    }
-    if(typeof value === 'object') {
-      return value;
-    }
-    return value;
-  }
-
   setOptions(generator) {
     var defaults = this.get();
     for(var i = 0; i < defaults.length; i++) {
