@@ -17,6 +17,7 @@
 //module for logging capabilities, shared across the generator
 
 var log = [];
+const util = require('util');
 
 var writeToLog = function(header, data) {
   if(!data) {
@@ -26,7 +27,7 @@ var writeToLog = function(header, data) {
   if((typeof data === 'string') || (typeof data === 'number') || (typeof data === 'boolean')) {
     log.push(header + " : " + data);
   } else {
-    log.push(header + " : " + JSON.stringify(data, null, 2) + JSON.stringify(Object.getOwnPropertyNames(data), null, 2));
+    log.push(header + " : " + util.inspect(data));
   }
 }
 
