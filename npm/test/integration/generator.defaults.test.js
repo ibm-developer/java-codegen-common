@@ -16,7 +16,7 @@
 
 // test the defaults module
 
-var assert = require('assert');
+var assert = require('yeoman-assert');
 var helpers = require('yeoman-test');
 var path = require('path');
 
