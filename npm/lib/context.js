@@ -30,6 +30,7 @@ function Context(id, config, promptmgr) {
   this.processor = processor;
   this.promptmgr = promptmgr;
   this.conf = extend(new Config(), config);   //start with a copy of the parent generator's config
+  this.conf.configFiles = [];                 //remove any previously set config files (don't want to inherit those)
   this.patterns = [];
   this.paths = [];
   this.comps = [];
