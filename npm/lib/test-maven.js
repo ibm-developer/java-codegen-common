@@ -87,8 +87,11 @@ test_maven.prototype.getBuildCommand = function() {
 var constructRegex = function(scope, groupId, artifactId, version, exclusions) {
   groupId = groupId.replace(/\./g, '\\.');
   artifactId = artifactId.replace(/\./g, '\\.');
-  version = version.replace(/\./g, '\\.');
-  var content = '<dependency>\\s*<groupId>' + groupId + '</groupId>\\s*<artifactId>' + artifactId + '</artifactId>\\s*<version>' + version + '</version>';
+  var content = '<dependency>\\s*<groupId>' + groupId + '</groupId>\\s*<artifactId>' + artifactId + '</artifactId>';
+  if(version) {
+    version = version.replace(/\./g, '\\.');
+    content += '\\s*<version>' + version + '</version>';
+  }
   if(scope != 'compile') {
     content += '\\s*<scope>' + scope + '</scope>';
   }
