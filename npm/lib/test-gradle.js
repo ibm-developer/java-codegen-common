@@ -91,8 +91,12 @@ test_gradle.prototype.getBuildCommand = function() {
 var constructRegex = function(scope, groupId, artifactId, version, exclusions) {
   groupId = groupId.replace(/\./g, '\\.');
   artifactId = artifactId.replace(/\./g, '\\.');
-  version = version.replace(/\./g, '\\.');
-  var content = scope + "\\s*\\('" + groupId + ':' + artifactId + ':' + version + "'\\)";
+  var content = scope + "\\s*\\('" + groupId + ':' + artifactId;
+  if(version) {
+    version = version.replace(/\./g, '\\.');
+    content += ':' + version ;
+  }
+  content += "'\\)";
   if(exclusions) {
     content += '\\s*\\{';
     for(var i=0; i < exclusions.length; i++) {
