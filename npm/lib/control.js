@@ -18,7 +18,7 @@
 
 var fs = require('fs');
 var fspath = require('path');
-var Handlebars = require('handlebars');
+const Handlebars = require('./helpers').handlebars;
 var controlBlock = undefined;
 var javarules = require('./javarules');
 var logger = require('./log');
