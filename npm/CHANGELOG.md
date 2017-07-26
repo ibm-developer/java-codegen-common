@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.4"></a>
+## [2.0.4](https://github.ibm.com/arf/java-codegen-common/compare/v2.0.3...v2.0.4) (2017-07-26)
+
+
+### Bug Fixes
+
+* **control:** fix to use correct handlebars processor ([122ebd8](https://github.ibm.com/arf/java-codegen-common/commit/122ebd8))
+
+
+
 <a name="2.0.3"></a>
 ## [2.0.3](https://github.ibm.com/arf/java-codegen-common/compare/v2.0.2...v2.0.3) (2017-07-21)
 
