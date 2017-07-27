@@ -30,7 +30,7 @@ Config.prototype.isValid = function() {
   var value = this.appName;
   if(!value || !PATTERN_NAME.test(value) || (value.length > 50)) return false;
   value = this.artifactId;
-  if(!value || !PATTERN_ARTIFACT_ID.test(value)) return false;
+  if(value && !PATTERN_ARTIFACT_ID.test(value)) return false;
   value = this.groupId;
   if(!value || !PATTERN_ARTIFACT_ID.test(value)) return false;
   return true;
