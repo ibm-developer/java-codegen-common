@@ -11,4 +11,4 @@ echo "Running scan"
 wicked-cli -s . -u travisci@travis.ibm.com
 cd $WORKING_DIR
 echo "Copying scan results file to ../docs"
-cp ./production/java-codegen-common/npm/npm_scanresults* ../docs/scan
+cp ./production/java-codegen-common/npm/npm_scan-results/* ../docs/scan
