@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.1.0"></a>
+# [2.1.0](https://github.ibm.com/arf/java-codegen-common/compare/v2.0.5...v2.1.0) (2017-08-03)
+
+
+### Bug Fixes
+
+* **build:** add wicked scope to travis yml ([9c2a837](https://github.ibm.com/arf/java-codegen-common/commit/9c2a837))
+* **build:** update osc cli tool ([92a666f](https://github.ibm.com/arf/java-codegen-common/commit/92a666f))
+
+
+### Features
+
+* **helpers:** add string helper for handlebars ([230b82d](https://github.ibm.com/arf/java-codegen-common/commit/230b82d))
+
+
+
 <a name="2.0.6"></a>
 ## [2.0.6](https://github.ibm.com/arf/java-codegen-common/compare/v2.0.5...v2.0.6) (2017-07-31)
 
