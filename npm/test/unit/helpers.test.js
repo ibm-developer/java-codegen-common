@@ -78,5 +78,13 @@ describe('Test custom Handlebars functions work as expected', function() {
   it('should return undefined when no non-null value', function(){
     assert(helpersTestResult.includes("firstAvailableFallback : [undefined]"));
   });
-
+  it('should return tag contents for matching String.includes() function', function(){
+    assert(helpersTestResult.includes("string : [includes pass]"));
+  });
+  it('should not return tag contents for non-matching String.includes() function', function(){
+    assert(!helpersTestResult.includes("string : [includes fail]"));
+  });
+  it('should return correct object value String.toLowerCase() function', function(){
+    assert(helpersTestResult.includes("string : [camelcasename]"));
+  });
 });
