@@ -20,6 +20,7 @@
   },
   "scripts": {
     "test": "mocha test/unit/*",
+    "testhelpers": "mocha test/unit/helpers*",
     "testint": "mocha test/integration/*",
     "coverage": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha test/unit/*",
     "coverageint": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha test/integration/*",
