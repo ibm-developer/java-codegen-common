@@ -66,7 +66,13 @@ Handlebars.registerHelper('firstAvailable', function() {
 Handlebars.registerHelper('string', function() {
   var argsToPass = [];                //arguments to pass to the string function
   var s = String(arguments[1]);       //create a new string object, save the reference a needed for the 'this' parameter in the apply call
-  var f = s[arguments[0]];            //the method on the string object that is going to be invoked
+  var name = arguments[0];
+  var notInverted = true;
+  if(name.charAt(0) == '!') {
+    notInverted = false;
+    name = name.substr(1);
+  }
+  var f = s[name];            //the method on the string object that is going to be invoked
   var handler = arguments[arguments.length - 1];    //the handlebars context handler is always the last argument
   if(arguments.length > 3) {
     //pass through all arguments through, not including the method name and string as well as stripping off the last argument which is added by handlebars
@@ -76,7 +82,7 @@ Handlebars.registerHelper('string', function() {
   if(typeof result === 'string') {
     return result;    //the function manipulated the original string in some way so return this as the result e.g. toLowerCase()
   }
-  if(result) {        //for all other 'trythy' results process the contents of the tag
+  if(!(result ^ notInverted)) {        //for all other 'trythy' results process the contents of the tag
     var data = Handlebars.createFrame(handler.data);
     return handler.fn(handler.data.root, {data : data, blockParams : [handler.data.root]});
   }
