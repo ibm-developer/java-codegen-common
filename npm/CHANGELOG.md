@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.2.0"></a>
+# [2.2.0](https://github.ibm.com/arf/java-codegen-common/compare/v2.1.0...v2.2.0) (2017-08-07)
+
+
+### Features
+
+* **helpers:** allow inverted checks on string objects ([7a7a3c6](https://github.ibm.com/arf/java-codegen-common/commit/7a7a3c6))
+
+
+
 <a name="2.1.0"></a>
 # [2.1.0](https://github.ibm.com/arf/java-codegen-common/compare/v2.0.5...v2.1.0) (2017-08-03)
 
