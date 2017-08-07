@@ -81,6 +81,9 @@ describe('Test custom Handlebars functions work as expected', function() {
   it('should return tag contents for matching String.includes() function', function(){
     assert(helpersTestResult.includes("string : [includes pass]"));
   });
+  it('should return tag contents for matching !String.includes() function', function(){
+    assert(helpersTestResult.includes("string : [inverted pass]"));
+  });
   it('should not return tag contents for non-matching String.includes() function', function(){
     assert(!helpersTestResult.includes("string : [includes fail]"));
   });
