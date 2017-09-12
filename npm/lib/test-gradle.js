@@ -66,17 +66,19 @@ test_gradle.prototype.assertNoContent = function(value) {
   });
 }
 
-test_gradle.prototype.assertDependency = function(scopeName, groupId, artifactId, version, exclusions) {
+test_gradle.prototype.assertDependency = function(scopeName, groupId, artifactId, version, exclusions, type) {
   var scope = convertScope(scopeName);
-  it(BUILD_FILE + ' contains a dependency with scope ' + scope + ', groupId = ' + groupId + ', artifactId = ' + artifactId + ' and version = ' + version, function() {
-    assert.fileContent(BUILD_FILE, constructRegex(scope, groupId, artifactId, version, exclusions));
+  it(BUILD_FILE + ' contains a dependency with scope ' + scope + ', groupId = ' + groupId + ', artifactId = ' + artifactId
+    + ', version = ' + version + (exclusions ? ', exclusions = ' + exclusions : '') + (type ? ', type = ' + type : ''), function() {
+    assert.fileContent(BUILD_FILE, constructRegex(scope, groupId, artifactId, version, exclusions, type));
   });
 }
 
-test_gradle.prototype.assertNoDependency = function(scopeName, groupId, artifactId, version, exclusions) {
+test_gradle.prototype.assertNoDependency = function(scopeName, groupId, artifactId, version, exclusions, type) {
   var scope = convertScope(scopeName);
-  it(BUILD_FILE + ' does not contain a dependency with scope ' + scope + ', groupId = ' + groupId + ', artifactId = ' + artifactId + ' and version = ' + version, function() {
-    assert.noFileContent(BUILD_FILE, constructRegex(scope, groupId, artifactId, version, exclusions));
+  it(BUILD_FILE + ' does not contain a dependency with scope ' + scope + ', groupId = ' + groupId + ', artifactId = ' + artifactId
+    + ', version = ' + version + (exclusions ? ', exclusions = ' + exclusions : '') + (type ? ', type = ' + type : ''), function() {
+    assert.noFileContent(BUILD_FILE, constructRegex(scope, groupId, artifactId, version, exclusions, type));
   });
 }
 
@@ -88,13 +90,16 @@ test_gradle.prototype.getBuildCommand = function() {
   return 'gradle build'; //full build
 }
 
-var constructRegex = function(scope, groupId, artifactId, version, exclusions) {
+var constructRegex = function(scope, groupId, artifactId, version, exclusions, type) {
   groupId = groupId.replace(/\./g, '\\.');
   artifactId = artifactId.replace(/\./g, '\\.');
   var content = scope + "\\s*\\('" + groupId + ':' + artifactId;
   if(version) {
     version = version.replace(/\./g, '\\.');
     content += ':' + version ;
+  }
+  if(type) {
+    content += '@' + type;
   }
   content += "'\\)";
   if(exclusions) {
