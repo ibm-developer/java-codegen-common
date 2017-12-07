@@ -20,7 +20,7 @@
 'use strict';
 
 function test(build) {
-  var test_build = require('./lib/test-' + build);
+  const test_build = require('./lib/test-' + build);
   return new test_build();
 }
 
@@ -34,4 +34,4 @@ module.exports = {
   log : require('./lib/log'),
   defaults : require('./lib/defaults'),
   test : test
-}
+};

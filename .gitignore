@@ -41,3 +41,5 @@ projects/*
 **/projects/*
 
 .vscode
+.idea
+

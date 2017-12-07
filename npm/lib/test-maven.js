@@ -14,100 +14,100 @@
  * limitations under the License.
  */
 
- /* Tests for maven */
+/* Tests for maven */
 
-'use strict'
+'use strict';
 
-var assert = require('yeoman-assert');
+const assert = require('yeoman-assert');
 const BUILD_FILE = 'pom.xml'
 
 function test_maven() {
 }
 
-test_maven.prototype.assertApplication = function(appname, groupId, artifactId, version) {
-  it('does not generate a build.gradle', function() {
+test_maven.prototype.assertApplication = function (appname, groupId, artifactId, version) {
+  it('does not generate a build.gradle', function () {
     assert.noFile('build.gradle');
   });
-  it('does not generate a settings.gradle', function() {
+  it('does not generate a settings.gradle', function () {
     assert.noFile('settings.gradle');
   });
-  it('generates a ' + BUILD_FILE + ' file with correct application name, groupId, artifactId and version', function() {
+  it('generates a ' + BUILD_FILE + ' file with correct application name, groupId, artifactId and version', function () {
     assert.file(BUILD_FILE);
-    assert.fileContent(BUILD_FILE,"<app.name>" + appname + "</app.name>");
-    assert.fileContent(BUILD_FILE,"<groupId>" + groupId + "</groupId>");
-    assert.fileContent(BUILD_FILE,"<artifactId>" + artifactId + "</artifactId>");
-    assert.fileContent(BUILD_FILE,"<version>" + version + "</version>");
+    assert.fileContent(BUILD_FILE, "<app.name>" + appname + "</app.name>");
+    assert.fileContent(BUILD_FILE, "<groupId>" + groupId + "</groupId>");
+    assert.fileContent(BUILD_FILE, "<artifactId>" + artifactId + "</artifactId>");
+    assert.fileContent(BUILD_FILE, "<version>" + version + "</version>");
   });
-}
+};
 
-test_maven.prototype.assertBluemix = function(appname) {
-  it('manifest.yml contains a path to a zip file with the same name as the application (' + appname + ')'), function() {
+test_maven.prototype.assertBluemix = function (appname) {
+  it('manifest.yml contains a path to a zip file with the same name as the application (' + appname + ')'), function () {
     assert.fileContent('manifest.yml', 'path: ./target/' + appname + '.zip');
   }
-}
+};
 
-test_maven.prototype.assertProperty = function(name, value) {
-  it(BUILD_FILE + ' contains a property called ' + name + ' with a value of ' + value, function() {
+test_maven.prototype.assertProperty = function (name, value) {
+  it(BUILD_FILE + ' contains a property called ' + name + ' with a value of ' + value, function () {
     assert.fileContent(BUILD_FILE, '<' + name + '>' + value + '</' + name + '>');
   });
-}
+};
 
-test_maven.prototype.assertContent = function(value) {
-  it(BUILD_FILE + ' contains file content ' + value, function() {
+test_maven.prototype.assertContent = function (value) {
+  it(BUILD_FILE + ' contains file content ' + value, function () {
     assert.fileContent(BUILD_FILE, value);
   });
-}
+};
 
-test_maven.prototype.assertNoContent = function(value) {
-  it(BUILD_FILE + ' does not contain file content ' + value, function() {
+test_maven.prototype.assertNoContent = function (value) {
+  it(BUILD_FILE + ' does not contain file content ' + value, function () {
     assert.noFileContent(BUILD_FILE, value);
   });
-}
+};
 
-test_maven.prototype.assertDependency = function(scope, groupId, artifactId, version, exclusions, type) {
+test_maven.prototype.assertDependency = function (scope, groupId, artifactId, version, exclusions, type) {
   it(BUILD_FILE + ' contains a dependency with scope ' + scope + ', groupId = ' + groupId + ', artifactId = ' + artifactId
-    + ', version = ' + version + (exclusions ? ', exclusions = ' + exclusions : '') + (type ? ', type = ' + type : ''), function() {
+    + ', version = ' + version + (exclusions ? ', exclusions = ' + exclusions : '') + (type ? ', type = ' + type : ''), function () {
     assert.fileContent(BUILD_FILE, constructRegex(scope, groupId, artifactId, version, exclusions, type));
   });
-}
+};
 
-test_maven.prototype.assertNoDependency = function(scope, groupId, artifactId, version, exclusions, type) {
+test_maven.prototype.assertNoDependency = function (scope, groupId, artifactId, version, exclusions, type) {
   it(BUILD_FILE + ' does not contain a dependency with scope ' + scope + ', groupId = ' + groupId + ', artifactId = ' + artifactId
-    + ', version = ' + version + (exclusions ? ', exclusions = ' + exclusions : '') + (type ? ', type = ' + type : ''), function() {
+    + ', version = ' + version + (exclusions ? ', exclusions = ' + exclusions : '') + (type ? ', type = ' + type : ''), function () {
     assert.noFileContent(BUILD_FILE, constructRegex(scope, groupId, artifactId, version, exclusions, type));
   });
-}
+};
 
-test_maven.prototype.getCompileCommand = function() {
+test_maven.prototype.getCompileCommand = function () {
   return 'mvn test-compile'; //compiles the main and test classes
-}
+};
 
-test_maven.prototype.getBuildCommand = function() {
+test_maven.prototype.getBuildCommand = function () {
   return 'mvn install'; //full build
-}
+};
 
-var constructRegex = function(scope, groupId, artifactId, version, exclusions, type) {
+const constructRegex = function (scope, groupId, artifactId, version, exclusions, type) {
   groupId = groupId.replace(/\./g, '\\.');
   artifactId = artifactId.replace(/\./g, '\\.');
-  var content = '<dependency>\\s*<groupId>' + groupId + '</groupId>\\s*<artifactId>' + artifactId + '</artifactId>';
-  if(version) {
+  let content = '<dependency>\\s*<groupId>' + groupId + '</groupId>\\s*<artifactId>' + artifactId + '</artifactId>';
+  if (version) {
     version = version.replace(/\./g, '\\.');
     content += '\\s*<version>' + version + '</version>';
   }
-  if(scope != 'compile') {
+  if (scope != 'compile') {
     content += '\\s*<scope>' + scope + '</scope>';
   }
-  if(type) {
+  if (type) {
     content += '\\s*<type>' + type + '</type';
   }
-  if(exclusions) {
+  if (exclusions) {
     content += '\\s*<exclusions>';
-    for(var i=0; i < exclusions.length; i++) {
+    for (let i = 0; i < exclusions.length; i++) {
       content += '\\s*<exclusion>\\s*<groupId>' + exclusions[i].groupId.replace(/\./g, '\\.') + '</groupId>\\s*<artifactId>' + exclusions[i].artifactId.replace(/\./g, '\\.') + '</artifactId>\\s*</exclusion>'
     }
     content += '\\s*</exclusions>';
   }
   return new RegExp(content);
-}
+};
 
 module.exports = test_maven;

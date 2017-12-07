@@ -16,24 +16,24 @@
 
 //test the Handlebars helper
 
-var assert = require('assert');
-var Handlebars = require('handlebars');
-var helpers = require('../../lib/helpers');
-var fs = require('../../lib/fsprocessor');
+'use strict';
+const assert = require('assert');
+const Handlebars = require('handlebars');
+const fs = require('../../lib/fsprocessor');
 
-var helpersTestData = {
+let helpersTestData = {
   value : "camelCaseName",
   item : "green",
   array : ["yellow", "pink"],
   noValue : undefined
 }
 
-var helpersTestResult = undefined;
+let helpersTestResult = undefined;
 
 before(function() {
   //before we start, process the template
-  var template = fs.getContentsSync("./test/resources/helpers/unit.template")
-  var compiledTemplate = Handlebars.compile(template);
+  let template = fs.getContentsSync("./test/resources/helpers/unit.template")
+  let compiledTemplate = Handlebars.compile(template);
   helpersTestResult = compiledTemplate(helpersTestData);
   //console.log(helpersTestResult);
 });

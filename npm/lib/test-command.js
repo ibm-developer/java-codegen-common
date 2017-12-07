@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
- /* Tests a command successfully executes */
+/* Tests a command successfully executes */
 
-'use strict'
+'use strict';
 
-var assert = require('yeoman-assert');
+const assert = require('yeoman-assert');
 
 const exec = require('child_process').exec;
 
@@ -26,11 +26,11 @@ function command() {
 
 }
 
-command.prototype.run = function(command) {
-  it('produces a project that can be built with command ' + command, function(done) {
+command.prototype.run = function (command) {
+  it('produces a project that can be built with command ' + command, function (done) {
     this.timeout(300000);
     console.log("Running exec with command " + command);
-    exec(command, {maxBuffer: 20*1024*1024}, (error, stdout, stderr) => {
+    exec(command, {maxBuffer: 20 * 1024 * 1024}, (error, stdout, stderr) => {
       if (error) {
         console.error(`exec error: ${error}`);
         console.log(`stdout: ${stdout}`);
@@ -42,6 +42,6 @@ command.prototype.run = function(command) {
       done();
     })
   });
-}
+};
 
 module.exports = command;

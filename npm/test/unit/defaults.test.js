@@ -16,17 +16,16 @@
 
 // test the defaults module
 
-var assert = require('assert');
-var helpers = require('yeoman-test');
-var Defaults = require('../resources/defaults/defaults.js');
-var path = require('path');
+'use strict';
+const assert = require('assert');
+const Defaults = require('../resources/defaults/defaults.js');
 
-var defaults = new Defaults();
+const defaults = new Defaults();
 
 describe('Defaults module', function() {
   describe('Call getDefault to get the default object', function() {
-    var appName = defaults.getObject('appName');
-    var buildType = defaults.getObject('buildType');
+    let appName = defaults.getObject('appName');
+    let buildType = defaults.getObject('buildType');
     it('can get the default value', function() {
       assert.equal(appName.default, 'testName');
       assert.equal(buildType.default, 'testBuildType');
@@ -45,10 +44,10 @@ describe('Defaults module', function() {
     assert.equal(defaults.get('buildType'), 'testBuildType');
   });
   describe('Call getDefaults to get a list of config values with defaults', function() {
-    var defaultValues = defaults.get();
-    var foundAppName = false;
-    var foundBuildType = false;
-    for(var i = 0; i < defaultValues.length; i++) {
+    let defaultValues = defaults.get();
+    let foundAppName = false;
+    let foundBuildType = false;
+    for(let i = 0; i < defaultValues.length; i++) {
       if(defaultValues[i] === 'appName') {
         foundAppName = true;
       }

@@ -16,14 +16,15 @@
 
 //module for Handlebars helpers
 
-var Handlebars = require('handlebars');
+'use strict';
+const Handlebars = require('handlebars');
 
 //allow slightly more sophisticated inclusion by checking the value of a property, not just it's presence or absence
 Handlebars.registerHelper('has', function(context, options, handler) {
-  var found = Array.isArray(context) ? context.includes(options) : (context === options);
+  let found = Array.isArray(context) ? context.includes(options) : (context === options);
   //see if the current context matches the options passed in
   if (found) {
-    var data = Handlebars.createFrame(handler.data);
+    let data = Handlebars.createFrame(handler.data);
     return handler.fn(handler.data.root, {data : data, blockParams : [handler.data.root]});
   }
   //parameters didn't match, so don't render anything in the template
@@ -32,10 +33,10 @@ Handlebars.registerHelper('has', function(context, options, handler) {
 
 //allow slightly more sophisticated exclusion by checking the value of a property, not just it's presence or absence
 Handlebars.registerHelper('missing', function(context, options, handler) {
-  var missing = Array.isArray(context) ? !context.includes(options) : (context != options);
+  let missing = Array.isArray(context) ? !context.includes(options) : (context != options);
   //see if the current context matches the options passed in
   if (missing) {
-    var data = Handlebars.createFrame(handler.data);
+    let data = Handlebars.createFrame(handler.data);
     //pass back contents as is for processing, rather than the data that is passed as the context
     return handler.fn(handler.data.root, {data : data, blockParams : [handler.data.root]});
   }
@@ -54,7 +55,7 @@ Handlebars.registerHelper('toUpperCase', function(context) {
 });
 
 Handlebars.registerHelper('firstAvailable', function() {
-  for(var i=0; i < arguments.length; i++) {
+  for(let i=0; i < arguments.length; i++) {
     if (arguments[i] && typeof arguments[i] === 'string') {
       return arguments[i];
     }
@@ -64,26 +65,26 @@ Handlebars.registerHelper('firstAvailable', function() {
 
 //allow access to String object functions
 Handlebars.registerHelper('string', function() {
-  var argsToPass = [];                //arguments to pass to the string function
-  var s = String(arguments[1]);       //create a new string object, save the reference a needed for the 'this' parameter in the apply call
-  var name = arguments[0];
-  var notInverted = true;
+  let argsToPass = [];                //arguments to pass to the string function
+  let s = String(arguments[1]);       //create a new string object, save the reference a needed for the 'this' parameter in the apply call
+  let name = arguments[0];
+  let notInverted = true;
   if(name.charAt(0) == '!') {
     notInverted = false;
     name = name.substr(1);
   }
-  var f = s[name];            //the method on the string object that is going to be invoked
-  var handler = arguments[arguments.length - 1];    //the handlebars context handler is always the last argument
+  let f = s[name];            //the method on the string object that is going to be invoked
+  let handler = arguments[arguments.length - 1];    //the handlebars context handler is always the last argument
   if(arguments.length > 3) {
     //pass through all arguments through, not including the method name and string as well as stripping off the last argument which is added by handlebars
-    for(var i = 2; i < arguments.length - 1; argsToPass.push(arguments[i++]));
+    for(let i = 2; i < arguments.length - 1; argsToPass.push(arguments[i++]));
   } 
-  var result = f.apply(s, argsToPass);
+  let result = f.apply(s, argsToPass);
   if(typeof result === 'string') {
     return result;    //the function manipulated the original string in some way so return this as the result e.g. toLowerCase()
   }
   if(!(result ^ notInverted)) {        //for all other 'trythy' results process the contents of the tag
-    var data = Handlebars.createFrame(handler.data);
+    let data = Handlebars.createFrame(handler.data);
     return handler.fn(handler.data.root, {data : data, blockParams : [handler.data.root]});
   }
   return undefined;

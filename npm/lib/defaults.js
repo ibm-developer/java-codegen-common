@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
- //module for storing default configuration values for yeoman prompts
- // e.g. {appName : {desc : 'Name of the application', type : String, default : 'LibertyProject'}}
-
+//module for storing default configuration values for yeoman prompts
+// e.g. {appName : {desc : 'Name of the application', type : String, default : 'LibertyProject'}}
+'use strict';
 class Defaults {
   constructor(defaultValues) {
     this.defaultValues = defaultValues;
@@ -35,9 +35,9 @@ class Defaults {
   }
 
   setOptions(generator) {
-    var defaults = this.get();
-    for(var i = 0; i < defaults.length; i++) {
-      var key = defaults[i];
+    let defaults = this.get();
+    for (let i = 0; i < defaults.length; i++) {
+      let key = defaults[i];
       generator.option(key, this.getObject(key));
     }
   }

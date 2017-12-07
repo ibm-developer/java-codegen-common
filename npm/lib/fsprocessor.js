@@ -18,60 +18,61 @@
 
 //first revision will read from the FS, using nodes in-built functions
 
-var fs = require('fs');
-var fspath = require('path');
-var Control = require('./control');
-var logger = require('./log');
+'use strict';
+const fs = require('fs');
+const fspath = require('path');
+const Control = require('./control');
+const logger = require('./log');
 
-var id = 0;
+let id = 0;
 
 //recursively walk the file tree starting from the specified root
-var dirwalk = function(root, tracker, resolver) {
+const dirwalk = function (root, tracker, resolver) {
   tracker.count[root] = undefined;    //mark that the directory is being processed
   fs.readdir(root, (err, files) => {
-      if(err) {
-        //TODO : appscan for Java does not like you putting too much info in the error messages, need to check for JS
-        console.error("There was an error reading the template directory");
-        logger.writeToLog("Folder error", err);
-        resolver.reject(err);
-        return;
+    if (err) {
+      //TODO : appscan for Java does not like you putting too much info in the error messages, need to check for JS
+      console.error("There was an error reading the template directory");
+      logger.writeToLog("Folder error", err);
+      resolver.reject(err);
+      return;
+    }
+    //now loop the files and add them to the store, need to add template processing somewhere in this stream
+    tracker.count[root] = files.length;
+    files.forEach((fileName) => {
+      let file = fspath.resolve(root, fileName);
+      let stats = fs.statSync(file);
+      if (stats.isDirectory()) {
+        dirwalk(file, tracker, resolver);
+        tracker.count[root]--;    //immediately remove from count as not a file
+      } else {
+        fs.readFile(file, 'utf8', (err, data) => {
+          let relativePath = fspath.relative(tracker.root, file);
+          //console.log("Found file " + file + " : " + relativePath);
+          if (err) {
+            console.error("Error reading file ");
+            logger.writeToLog("File error", err);
+            resolver.reject(err);
+            return;
+          }
+          if (tracker.control.isControl(relativePath) || tracker.control.isConfig(relativePath)) {
+            //console.log("CONTROL FILE found, skipping processing");
+          } else {
+            //fileFound passes back an array of fragments so that data can be repeated
+            let fragments = tracker.control.fileFound(relativePath, data);
+            if (tracker.callback) {
+              fragments.forEach((fragment) => {
+                if (tracker.control.shouldGenerate(fragment.path)) {
+                  tracker.callback(fragment.path, fragment.template, fragment.data);
+                }
+              });
+            }
+          }
+          tracker.count[root]--;  //remove from tracker when contents have been read and callbacks made
+          resolver.canResolve();
+        });
       }
-      //now loop the files and add them to the store, need to add template processing somewhere in this stream
-      tracker.count[root] = files.length;
-      files.forEach((fileName, index) => {
-        var file = fspath.resolve(root, fileName);
-        var stats = fs.statSync(file);
-        if(stats.isDirectory()) {
-          dirwalk(file, tracker, resolver);
-          tracker.count[root]--;    //immediately remove from count as not a file
-        } else {
-          fs.readFile(file, 'utf8', (err, data) => {
-            var relativePath = fspath.relative(tracker.root, file);
-            //console.log("Found file " + file + " : " + relativePath);
-            if(err) {
-              console.error("Error reading file ");
-              logger.writeToLog("File error", err);
-              resolver.reject(err);
-              return;
-            }
-            if(tracker.control.isControl(relativePath) || tracker.control.isConfig(relativePath)) {
-              //console.log("CONTROL FILE found, skipping processing");
-            } else {
-              //fileFound passes back an array of fragments so that data can be repeated
-              var fragments = tracker.control.fileFound(relativePath, data);
-              if(tracker.callback) {
-                fragments.forEach((fragment) => {
-                  if(tracker.control.shouldGenerate(fragment.path)) {
-                    tracker.callback(fragment.path, fragment.template, fragment.data);
-                  }
-                });
-              }
-            }
-            tracker.count[root]--;  //remove from tracker when contents have been read and callbacks made
-            resolver.canResolve();
-          });
-        }
-      });
+    });
   });
 }
 
@@ -80,16 +81,16 @@ function Resolver() {
   this.resolve = undefined;
   this.reject = undefined;
   this.trackers = [];
-  this.canResolve = function() {
-    for (var i=0 ; i < this.trackers.length ; i++) {
-      if(this.trackers[i] == undefined) {
+  this.canResolve = function () {
+    for (let i = 0; i < this.trackers.length; i++) {
+      if (this.trackers[i] == undefined) {
         /* istanbul ignore next */    //ignoring as entering this branch depends on callback order and is not consistently reproducible
         return;   //this is one in process
       }
-      var count = this.trackers[i].count;
-      for (var counter in count) {
+      let count = this.trackers[i].count;
+      for (let counter in count) {
         if (count.hasOwnProperty(counter)) {
-          if((count[counter] == undefined) || count[counter]) {
+          if ((count[counter] == undefined) || count[counter]) {
             return;
           }
         }
@@ -101,33 +102,33 @@ function Resolver() {
 
 //return a promise that will complete when all files have been processed
 //used to ensure the generator does not move beyond the current lifecycle step
-var startWalk = function(config, cb, paths) {
+const startWalk = function (config, cb, paths) {
   if (!Array.isArray(paths)) {
     throw 'Paths is not an array, it is ' + JSON.stringify(paths);
   }
   if (!paths.length) {
     throw 'No paths have been specified for the template ' + config.createType;
   }
-  if(!config) {
+  if (!config) {
     throw 'Missing config parameter, unable to start file walk.';
   }
-  var resolver = new Resolver();
+  let resolver = new Resolver();
   resolver.trackers = [];
-  for (var i=0 ; i < paths.length ; i++) {
-    var absolutePath = fspath.resolve(paths[i]);
+  for (let i = 0; i < paths.length; i++) {
+    let absolutePath = fspath.resolve(paths[i]);
     resolver.trackers.push({
-      id : id++,
-      count : {},
-      callback : cb,   //callback with file contents
-      root : absolutePath,
-      control : new Control(absolutePath, config)
+      id: id++,
+      count: {},
+      callback: cb,   //callback with file contents
+      root: absolutePath,
+      control: new Control(absolutePath, config)
     });
   }
 
-  var p = new Promise((resolve, reject) => {
+  let p = new Promise((resolve, reject) => {
     resolver.resolve = resolve;
     resolver.reject = reject;
-    for (var i=0 ; i < resolver.trackers.length ; i++) {
+    for (let i = 0; i < resolver.trackers.length; i++) {
       dirwalk(resolver.trackers[i].root, resolver.trackers[i], resolver);
     }
   });
@@ -135,22 +136,22 @@ var startWalk = function(config, cb, paths) {
 }
 
 //synchronous synchronously get the contents of a file
-var getContentsSync = function(value) {
-  var file = fspath.resolve(value);
-  if(!fs.existsSync(file)) {
+const getContentsSync = function (value) {
+  let file = fspath.resolve(value);
+  if (!fs.existsSync(file)) {
     logger.writeToLog("Error : specified file does not exist", file);
     throw "Error : specified file does not exist";
   }
-  var stats = fs.statSync(file);
-  if(stats.isDirectory()) {
+  let stats = fs.statSync(file);
+  if (stats.isDirectory()) {
     logger.writeToLog("Error : specified path is a directory", file);
     throw "Error : specified path is a directory";
   }
   try {
-    var contents = fs.readFileSync(file, 'utf8');
+    let contents = fs.readFileSync(file, 'utf8');
     try {
       return JSON.parse(contents);
-    } catch(err) {
+    } catch (err) {
       //not a JSON object, so just return the string
       return contents;
     }
@@ -163,6 +164,6 @@ var getContentsSync = function(value) {
 }
 
 module.exports = {
-  scan : startWalk,
-  getContentsSync : getContentsSync
+  scan: startWalk,
+  getContentsSync: getContentsSync
 };

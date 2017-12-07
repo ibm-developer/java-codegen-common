@@ -16,8 +16,9 @@
 
 //test the log module
 
-var assert = require('assert');
-var logger = require('../../lib/log');
+'use strict';
+const assert = require('assert');
+const logger = require('../../lib/log');
 
 describe('logging module', function() {
 
@@ -39,14 +40,14 @@ describe('logging module', function() {
     it('it should log an objects properties and method names', function(){
       logger.clear();
       logger.writeToLog("Test", {name : 'TestName', method : function(){}});
-      var data = logger.getLogs()[0];
+      const data = logger.getLogs()[0];
       assert(data.indexOf('TestName') != -1);
       assert(data.indexOf('method') != -1);
     });
     it('it should log missing data as undefined', function(){
       logger.clear();
       logger.writeToLog("Test");
-      var data = logger.getLogs()[0];
+      const data = logger.getLogs()[0];
       assert(data.indexOf('undefined') != -1);
     });
   });

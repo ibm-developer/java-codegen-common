@@ -14,26 +14,26 @@
  * limitations under the License.
  */
 
- /* Tests for gradle */
+/* Tests for gradle */
 
-'use strict'
+'use strict';
 
-var assert = require('yeoman-assert');
+const assert = require('yeoman-assert');
 const BUILD_FILE = 'build.gradle';
 const SETTINGS_FILE = 'settings.gradle';
 
 function test_gradle() {
 }
 
-test_gradle.prototype.assertApplication = function(appname, groupId, artifactId, version) {
-  it('does not generate a pom.xml', function() {
+test_gradle.prototype.assertApplication = function (appname, groupId, artifactId, version) {
+  it('does not generate a pom.xml', function () {
     assert.noFile('pom.xml');   //build file
   });
 
-  it('generates a build.gradle and settings.gradle file with correct application name, groupId, artifactId and version', function() {
+  it('generates a build.gradle and settings.gradle file with correct application name, groupId, artifactId and version', function () {
     assert.file(BUILD_FILE);
     assert.file(SETTINGS_FILE);
-    assert.fileContent(BUILD_FILE,"appName = '" + appname +"'");
+    assert.fileContent(BUILD_FILE, "appName = '" + appname + "'");
     assert.fileContent(BUILD_FILE, "group = '" + groupId + "'");
     assert.fileContent(BUILD_FILE, "version = '" + version + "'");
     assert.fileContent(SETTINGS_FILE, "rootProject.name = '" + artifactId + "'");
@@ -41,70 +41,70 @@ test_gradle.prototype.assertApplication = function(appname, groupId, artifactId,
 }
 
 
-test_gradle.prototype.assertBluemix = function(appname) {
-  it('manifest.yml contains a path to a zip file with the same name as the application (' + appname + ')'), function() {
+test_gradle.prototype.assertBluemix = function (appname) {
+  it('manifest.yml contains a path to a zip file with the same name as the application (' + appname + ')'), function () {
     assert.fileContent('manifest.yml', 'path: ./build/' + appname + '.zip');
   }
 }
 
-test_gradle.prototype.assertProperty = function(name, value) {
-  it('build.gradle contains a property called ' + name + ' with a value of ' + value, function() {
+test_gradle.prototype.assertProperty = function (name, value) {
+  it('build.gradle contains a property called ' + name + ' with a value of ' + value, function () {
     assert.fileContent(BUILD_FILE, name + ' = ' + value);
   });
 
 }
 
-test_gradle.prototype.assertContent = function(value) {
-  it(BUILD_FILE + ' contains file content ' + value, function() {
+test_gradle.prototype.assertContent = function (value) {
+  it(BUILD_FILE + ' contains file content ' + value, function () {
     assert.fileContent(BUILD_FILE, value);
   });
 }
 
-test_gradle.prototype.assertNoContent = function(value) {
-  it(BUILD_FILE + ' does not contain file content ' + value, function() {
+test_gradle.prototype.assertNoContent = function (value) {
+  it(BUILD_FILE + ' does not contain file content ' + value, function () {
     assert.noFileContent(BUILD_FILE, value);
   });
 }
 
-test_gradle.prototype.assertDependency = function(scopeName, groupId, artifactId, version, exclusions, type) {
-  var scope = convertScope(scopeName);
+test_gradle.prototype.assertDependency = function (scopeName, groupId, artifactId, version, exclusions, type) {
+  let scope = convertScope(scopeName);
   it(BUILD_FILE + ' contains a dependency with scope ' + scope + ', groupId = ' + groupId + ', artifactId = ' + artifactId
-    + ', version = ' + version + (exclusions ? ', exclusions = ' + exclusions : '') + (type ? ', type = ' + type : ''), function() {
+    + ', version = ' + version + (exclusions ? ', exclusions = ' + exclusions : '') + (type ? ', type = ' + type : ''), function () {
     assert.fileContent(BUILD_FILE, constructRegex(scope, groupId, artifactId, version, exclusions, type));
   });
 }
 
-test_gradle.prototype.assertNoDependency = function(scopeName, groupId, artifactId, version, exclusions, type) {
-  var scope = convertScope(scopeName);
+test_gradle.prototype.assertNoDependency = function (scopeName, groupId, artifactId, version, exclusions, type) {
+  let scope = convertScope(scopeName);
   it(BUILD_FILE + ' does not contain a dependency with scope ' + scope + ', groupId = ' + groupId + ', artifactId = ' + artifactId
-    + ', version = ' + version + (exclusions ? ', exclusions = ' + exclusions : '') + (type ? ', type = ' + type : ''), function() {
+    + ', version = ' + version + (exclusions ? ', exclusions = ' + exclusions : '') + (type ? ', type = ' + type : ''), function () {
     assert.noFileContent(BUILD_FILE, constructRegex(scope, groupId, artifactId, version, exclusions, type));
   });
 }
 
-test_gradle.prototype.getCompileCommand = function() {
+test_gradle.prototype.getCompileCommand = function () {
   return 'gradle compileTestJava'; //compiles the main and test classes
 }
 
-test_gradle.prototype.getBuildCommand = function() {
+test_gradle.prototype.getBuildCommand = function () {
   return 'gradle build'; //full build
 }
 
-var constructRegex = function(scope, groupId, artifactId, version, exclusions, type) {
+const constructRegex = function (scope, groupId, artifactId, version, exclusions, type) {
   groupId = groupId.replace(/\./g, '\\.');
   artifactId = artifactId.replace(/\./g, '\\.');
-  var content = scope + "\\s*\\('" + groupId + ':' + artifactId;
-  if(version) {
+  let content = scope + "\\s*\\('" + groupId + ':' + artifactId;
+  if (version) {
     version = version.replace(/\./g, '\\.');
-    content += ':' + version ;
+    content += ':' + version;
   }
-  if(type) {
+  if (type) {
     content += '@' + type;
   }
   content += "'\\)";
-  if(exclusions) {
+  if (exclusions) {
     content += '\\s*\\{';
-    for(var i=0; i < exclusions.length; i++) {
+    for (let i = 0; i < exclusions.length; i++) {
       content += "\\s*exclude group:\\s*'" + exclusions[i].groupId.replace(/\./g, '\\.') + "',\\s*module:\\s*'" + exclusions[i].artifactId.replace(/\./g, '\\.') + "'";
     }
     content += '\\s*\\}';
@@ -112,8 +112,8 @@ var constructRegex = function(scope, groupId, artifactId, version, exclusions, t
   return new RegExp(content);
 }
 
-var convertScope = function(scope) {
-  switch(scope) {
+let convertScope = function (scope) {
+  switch (scope) {
     case 'provided':
       return 'providedCompile';
     case 'test':

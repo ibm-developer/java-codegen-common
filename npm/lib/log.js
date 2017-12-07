@@ -15,34 +15,34 @@
  */
 
 //module for logging capabilities, shared across the generator
-
-var log = [];
+'use strict';
+let log = [];
 const util = require('util');
 
-var writeToLog = function(header, data) {
-  if(!data) {
+const writeToLog = function (header, data) {
+  if (!data) {
     log.push(header + " : undefined");
     return;
   }
-  if((typeof data === 'string') || (typeof data === 'number') || (typeof data === 'boolean')) {
+  if ((typeof data === 'string') || (typeof data === 'number') || (typeof data === 'boolean')) {
     log.push(header + " : " + data);
   } else {
     log.push(header + " : " + util.inspect(data));
   }
 }
 
-var getLogs = function() {
+const getLogs = function () {
   return log;
 }
 
 //clear any log entries
-var clear = function() {
+const clear = function () {
   log = [];
 }
 
 module.exports = {
   //module doesn't export anything, all helpers are installed by requiring this module
-  writeToLog : writeToLog,
-  getLogs : getLogs,
-  clear : clear
+  writeToLog: writeToLog,
+  getLogs: getLogs,
+  clear: clear
 }

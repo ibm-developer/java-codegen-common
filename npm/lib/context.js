@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict'
+'use strict';
+
 // The context object to be passed to sub generators
 const fspath = require('path');
 const logger = require('./log');
@@ -41,7 +42,7 @@ function Context(id, config, promptmgr) {
 
   this.configure = (generator) => {
     this.conf.templateRoot = generator.templatePath();
-    var control = new Control(fspath.resolve(this.conf.templateRoot, this.conf.createType), this.conf);
+    let control = new Control(fspath.resolve(this.conf.templateRoot, this.conf.createType), this.conf);
     this.paths = control.getComposition();
     this.comps.forEach(composition => {
       this.paths.push(fspath.resolve(this.conf.templateRoot, composition));
@@ -57,11 +58,11 @@ function Context(id, config, promptmgr) {
     this.logger.writeToLog("Destination path", generator.destinationRoot());
     this.logger.writeToLog("Processor", this.processor);
     return this.processor.scan(this.conf, (relativePath, template) => {
-      var outFile = generator.destinationPath(relativePath);
+      let outFile = generator.destinationPath(relativePath);
       this.logger.writeToLog("CB : writing to", outFile);
       try {
-        var compiledTemplate = Handlebars.compile(template);
-        var output = compiledTemplate(this.conf);
+        let compiledTemplate = Handlebars.compile(template);
+        let output = compiledTemplate(this.conf);
         generator.fs.write(outFile, output);
       } catch (err) {
         this.logger.writeToLog("Template error : " + relativePath, err.message);

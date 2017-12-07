@@ -16,6 +16,7 @@
 
 //defaults used to test the correct operation of the config library
 
+'use strict';
 const DEFAULTS = {
   appName : {desc : 'Name of the application', type : String, default : 'LibertyProject'},
   buildType : {desc : 'Build system to use', type : String, default : 'maven'},
@@ -30,11 +31,11 @@ const DEFAULTS = {
   technologies : {desc : 'Technologies to configure when using the prompt:liberty promptType', type : (value)=>{return value;}, default : []}
 };
 
-var getDefaultObject = function(name) {
+const getDefaultObject = function(name) {
   return DEFAULTS[name];
 }
 
-var get = function(name) {
+const get = function(name) {
   if (name === undefined) {
     return Object.keys(DEFAULTS);
   } else {
@@ -42,7 +43,7 @@ var get = function(name) {
   }
 }
 
-var toObject = function(value) {
+const toObject = function(value) {
   if(typeof value == 'string') {
     return JSON.parse(value);
   }

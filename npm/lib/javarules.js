@@ -15,13 +15,14 @@
  */
 
 //module to provide rules for generating java artifacts
+'use strict';
 
 function convertToJavaName(name, isClass) {
   if(!name.length) return "anonymous";
   name = name.trim();
-  var result = "";
-  for(var i = 0; i < name.length; i++) {
-    var c = name.charAt(i);
+  let result = "";
+  for(let i = 0; i < name.length; i++) {
+    let c = name.charAt(i);
     if(i == 0) {
       if(isClass) {
         c = c.toUpperCase();
@@ -41,15 +42,15 @@ function convertToJavaName(name, isClass) {
   return result;
 }
 
-var methodName = function(name) {
+const methodName = function(name) {
   return convertToJavaName(name, false);
 }
 
-var className = function(name) {
+const className = function(name) {
   return convertToJavaName(name, true);
 }
 
-var dataType = function(type) {
+const dataType = function(type) {
   if(type === "string") return "String";
   if(type === 'integer') return "long";
   return "Object";

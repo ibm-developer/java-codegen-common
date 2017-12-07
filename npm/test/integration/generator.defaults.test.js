@@ -16,19 +16,20 @@
 
 // test the defaults module
 
-var assert = require('yeoman-assert');
-var helpers = require('yeoman-test');
-var path = require('path');
+'use strict';
+const assert = require('yeoman-assert');
+const helpers = require('yeoman-test');
+const path = require('path');
 
-beforeEach(function() {
-    return helpers.run(path.join(__dirname, '../resources/defaults'));
-})
+beforeEach(function () {
+  return helpers.run(path.join(__dirname, '../resources/defaults'));
+});
 
-describe('Defaults module', function() {
-  describe('Call setOptions to expose the defaults as Yeoman options', function() {
-    it('sets the defaults as options on the generator', function() {
-        assert.fileContent('options.txt', 'appName=testName');
-        assert.fileContent('options.txt', 'buildType=testBuildType');
+describe('Defaults module', function () {
+  describe('Call setOptions to expose the defaults as Yeoman options', function () {
+    it('sets the defaults as options on the generator', function () {
+      assert.fileContent('options.txt', 'appName=testName');
+      assert.fileContent('options.txt', 'buildType=testBuildType');
     });
   });
-})
+});

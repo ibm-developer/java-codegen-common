@@ -16,12 +16,11 @@
 
 //module for handling control directives in a control.json if it is present
 
-var fs = require('fs');
-var fspath = require('path');
+'use strict';
+const fs = require('fs');
+const fspath = require('path');
 const Handlebars = require('./helpers').handlebars;
-var controlBlock = undefined;
-var javarules = require('./javarules');
-var logger = require('./log');
+const logger = require('./log');
 
 //determines if the passed relative path is a control file or not
 const CONTROL_FILE = "control.js";
@@ -61,28 +60,28 @@ Control.prototype.hasControl = function() {
 Control.prototype.processProject = function() {
   //see if control file exists
   this.controlBlock = undefined;    //remove any existing setting in case the files have been updated between invocations
-  var file = fspath.resolve(this.path, CONTROL_FILE);
+  let file = fspath.resolve(this.path, CONTROL_FILE);
   if(!fs.existsSync(file)) {
     //console.log("Control file " + file + " does not exist");
     return;   //no additional control file found in this project
   }
 
   //it does, so parse it in and run it through Handlebars
-  var template = fs.readFileSync(file, 'utf8');
+  let template = fs.readFileSync(file, 'utf8');
   logger.writeToLog("Config data for controlBlock " + file, this.config);
-  var compiledTemplate = Handlebars.compile(template);
-  var output = compiledTemplate(this.config);
+  let compiledTemplate = Handlebars.compile(template);
+  let output = compiledTemplate(this.config);
   try {
     this.controlBlock = eval("(" + output + ")");
     if(this.controlBlock) {
       this.controlBlock.subCompositions = {};
       if(this.controlBlock.composition) {
-        var composition = this.controlBlock.composition.slice();
+        let composition = this.controlBlock.composition.slice();
         this.controlBlock.composition = [];
-        for(var i = 0; i < composition.length; i++) {
+        for(let i = 0; i < composition.length; i++) {
           if(composition[i].includes(':')) {
             //this is a sub-generator composition directive
-            var components = composition[i].split(':');
+            let components = composition[i].split(':');
             if(!this.controlBlock.subCompositions[components[0]]) {
               this.controlBlock.subCompositions[components[0]] = [components[1]];
             } else {
@@ -113,7 +112,7 @@ Control.prototype.shouldGenerate = function(relativePath) {
     return true;   //no excludes defined
   }
   if (this.controlBlock.excludes) {
-    for(var i = 0; i < this.controlBlock.excludes.length; i++) {
+    for(let i = 0; i < this.controlBlock.excludes.length; i++) {
       if(fspath.resolve(this.controlBlock.excludes[i]) === fspath.resolve(relativePath)) {
         // console.log("File excluded : " + relativePath);
         return false;
@@ -121,8 +120,8 @@ Control.prototype.shouldGenerate = function(relativePath) {
     }
   }
   if (this.controlBlock.excludesDir) {
-    for(var i = 0; i < this.controlBlock.excludesDir.length; i++) {
-      var path = fspath.parse(relativePath);
+    for(let i = 0; i < this.controlBlock.excludesDir.length; i++) {
+      let path = fspath.parse(relativePath);
       if(fspath.resolve(path.dir) === fspath.resolve(this.controlBlock.excludesDir[i])) {
         //console.log("Directory excluded : " + relativePath);
         return false;

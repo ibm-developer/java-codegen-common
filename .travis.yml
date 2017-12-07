@@ -4,14 +4,16 @@ jdk:
 before_install:
   - nvm install 6.9.1
   - cd ./npm
-  - npm i -g makeshift && makeshift -r https://npm-registry.whitewater.ibm.com -s arf ibm wicked
+  - wget https://github.com/github/hub/releases/download/v2.2.9/hub-linux-386-2.2.9.tgz
+  - tar -xvzf hub-linux-386-2.2.9.tgz
+  - export PATH=${PATH}:$PWD/hub-linux-386-2.2.9/bin/
+  - cd ./npm
+  - npm i -g makeshift && makeshift -r https://registry.npmjs.com
 install:
   - npm install
 script:
+  - npm run lint
   - npm test
   - npm run testint
-  - npm run coverage
-  - npm run coverageint
+  - npm run coveralls
   - ../deploy.sh
-env:
-  - secure : "vtNdicMq3zd/pcYr+qz6SvUDOQu1YnYjMCVFwBcYNQcQO0+bzih0Uxp+wQVk64P78yZUFUFWBv/JM4REgEoib9ozrDP5gmdXwZAC5ZChwCGmmmmJc8U5v2Gz44BYzE72XEU7B7QLlbhGcRZTgUn7CSIMfSJszUGGWOLXpNEUkglb/5ZhOZUVaOcjF9zZBEyQ7NGM0VhanT2yX020H6mIEEw4RT27efTuc3CQREMy2ROa6iCBlLb2I8lioiqdLuj9X8J0SoWttwQ/7/qTZy/9DrAFtYuOx58Ef0cqlPbTTCXIZDiZ/SjmFXGSgW/k9IPGZkrD6fjYXOg8E/4CM3nRY3q0I3kBk5vFbUbCg9sgu7wSmDVrON+gZJARNW3OlRjUq+vNWhsAsGe93T3ZKDgEoRd5YU3MVlXoTmLAuXD+JYYo56kK29T9dXKmNgPojVGwBKoANgzmSSGGEfdp/6eZxNcOxmbkOYm3s13+ffPuIlOJgQ+mghNlkUlIwfpz31xZTPBMSB/0bIUs5QyyQGVXIQWY1YhERjlbY+93F6h2QqMoXFvqxWw+MrXPqJdQnUN1ZArsBJiOcs23nygIxaPen5gRWYeVat4sY50MTv/Lg7g5MV3370kFQC9xaUj/OD0VJAcYb6vLZOHQ5MjwsNjUO1hKZcnbGsSkCi+oqLFuhsM="
