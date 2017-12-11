@@ -3,7 +3,7 @@ echo "Auto publish script : version 0.0.2"
 echo "Checking if a new publish cycle is required ..."
 PKG_NAME=`node -e "console.log(require('./package.json').name);"`
 PKG_VER=`node -e "console.log(require('./package.json').version);"`
-NPM_VER=`npm show $PKG_NAME version`
+NPM_VER=`npm show $PKG_NAME version --silent`
 CHECK_REG=$(curl https://registry.npmjs.com/$PKG_NAME)
 NOT_FOUND=$(node -e "console.log(Object.keys(JSON.parse(JSON.stringify($CHECK_REG))).length)")
 
