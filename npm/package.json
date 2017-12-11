@@ -1,5 +1,5 @@
 {
-  "name": "java-codegen-common",
+  "name": "ibm-java-codegen-common",
   "version": "2.3.0",
   "description": "Common Java code generation utilities",
   "license": "Apache-2.0",
@@ -45,6 +45,7 @@
   ],
   "contributors": [
     "Adam Pilkington",
-    "Kate Stanley"
+    "Kate Stanley",
+    "Quan Vo"
   ]
 }

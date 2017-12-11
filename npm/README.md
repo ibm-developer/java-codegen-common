@@ -1,6 +1,6 @@
 # IBM Java Codegen Common
 
-[![IBM Cloud powered][img-bluemix-powered]][url-bluemix]
+[![IBM Cloud powered][img-cloud-powered]][url-bluemix]
 [![Travis][img-travis-master]][url-travis-master]
 [![Coveralls][img-coveralls-master]][url-coveralls-master]
 [![Codacy][img-codacy]][url-codacy]
@@ -11,15 +11,15 @@
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
 
-[img-bluemix-powered]: https://img.shields.io/badge/bluemix-powered-blue.svg
+[img-cloud-powered]: https://img.shields.io/badge/ibmcloud-powered-blue.svg
 [url-bluemix]: http://bluemix.net
-[url-npm]: https://www.npmjs.com/package/java-codegen-common
-[img-license]: https://img.shields.io/npm/l/java-codegen-common.svg
-[img-version]: https://img.shields.io/npm/v/java-codegen-common.svg
-[img-npm-downloads-monthly]: https://img.shields.io/npm/dm/java-codegen-common.svg
-[img-npm-downloads-total]: https://img.shields.io/npm/dt/java-codegen-common.svg
+[url-npm]: https://www.npmjs.com/package/ibm-java-codegen-common
+[img-license]: https://img.shields.io/npm/l/ibm-java-codegen-common.svg
+[img-version]: https://img.shields.io/npm/v/ibm-java-codegen-common.svg
+[img-npm-downloads-monthly]: https://img.shields.io/npm/dm/ibm-java-codegen-common.svg
+[img-npm-downloads-total]: https://img.shields.io/npm/dt/ibm-java-codegen-common.svg
 
-[img-travis-master]: https://travis-ci.org/ibm-developer/java-codegen-common.svg?branch=development
+[img-travis-master]: https://travis-ci.org/ibm-developer/java-codegen-common.svg?branch=master
 [url-travis-master]: https://travis-ci.org/ibm-developer/java-codegen-common/branches
 
 [img-coveralls-master]: https://coveralls.io/repos/github/ibm-developer/java-codegen-common/badge.svg
