@@ -5,10 +5,10 @@ PKG_NAME=`node -e "console.log(require('./package.json').name);"`
 PKG_VER=`node -e "console.log(require('./package.json').version);"`
 NPM_VER=`npm show $PKG_NAME version`
 CHECK_REG=$(curl https://registry.npmjs.com/$PKG_NAME)
-NOT_FOUND=$(node -e "console.log(Object.keys(JSON.parse(JSON.stringify($CHECK_REG))).length")
+NOT_FOUND=$(node -e "console.log(Object.keys(JSON.parse(JSON.stringify($CHECK_REG))).length)")
 
 echo "$PKG_NAME : version = $PKG_VER, npm version = $NPM_VER"
-if [[ $TRAVIS_BRANCH == "master"  ]]; then
+if [[ $TRAVIS_BRANCH == "master" ]]; then
   echo "Build targetting master - checking if this is a PR or not"
   if [[ $TRAVIS_PULL_REQUEST == "false" ]]; then
     echo "This is a build on master, performing additional steps"
