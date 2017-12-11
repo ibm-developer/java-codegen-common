@@ -2,11 +2,11 @@ language: java
 jdk:
   - oraclejdk8
 before_install:
-  - nvm install 6.9.1
-  - cd ./npm
   - wget https://github.com/github/hub/releases/download/v2.2.9/hub-linux-386-2.2.9.tgz
+  - shasum -a 256 -c ./sha256.txt
   - tar -xvzf hub-linux-386-2.2.9.tgz
   - export PATH=${PATH}:$PWD/hub-linux-386-2.2.9/bin/
+  - nvm install 6.9.1
   - cd ./npm
   - npm i -g makeshift && makeshift -r https://registry.npmjs.com
 install:
