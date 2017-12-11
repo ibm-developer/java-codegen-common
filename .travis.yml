@@ -16,5 +16,4 @@ script:
   - npm test
   - npm run coveralls
   - npm run testint
-  - npm run coveralls
   - ../deploy.sh
