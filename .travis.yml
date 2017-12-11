@@ -8,7 +8,7 @@ before_install:
   - export PATH=${PATH}:$PWD/hub-linux-386-2.2.9/bin/
   - nvm install 6.9.1
   - cd ./npm
-  - npm i -g makeshift && makeshift -r https://registry.npmjs.com
+  - npm i -g makeshift && makeshift -r https://registry.npmjs.org
 install:
   - npm install
 script:
