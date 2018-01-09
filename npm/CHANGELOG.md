@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.4.0"></a>
+# [2.4.0](https://github.com/ibm-developer/java-codegen-common/compare/v2.3.0...v2.4.0) (2018-01-09)
+
+
+### Bug Fixes
+
+* syntax error in deploy.sh ([4ae6842](https://github.com/ibm-developer/java-codegen-common/commit/4ae6842))
+* **build:** Add line to prevent test file being modified when updating the version ([60e5437](https://github.com/ibm-developer/java-codegen-common/commit/60e5437))
+* **build:** Fix travis builds to deploy after first version ([0b2d985](https://github.com/ibm-developer/java-codegen-common/commit/0b2d985))
+* **build:** Update prerelease.sh to have correct env reference ([938485b](https://github.com/ibm-developer/java-codegen-common/commit/938485b))
+
+
+### Features
+
+* **travis:** added linter, added coveralls, updated .travis.yaml ([a07ae4a](https://github.com/ibm-developer/java-codegen-common/commit/a07ae4a))
+* **travis:** added linter, added coveralls, updated .travis.yaml ([0cd20e9](https://github.com/ibm-developer/java-codegen-common/commit/0cd20e9))
+
+
+
 <a name="2.3.0"></a>
 # [2.3.0](https://github.ibm.com/arf/java-codegen-common/compare/v2.2.0...v2.3.0) (2017-09-12)
 
