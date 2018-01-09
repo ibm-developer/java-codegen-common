@@ -22,6 +22,8 @@ PKG_VER_NEXT=`node -e "console.log(require('./package.json').version);"`
 echo "Creating git branch"
 BRANCH="updateTo${PKG_VER_NEXT}"
 git checkout -b $BRANCH
+# prevent test file from being accidentally modified
+git checkout -- npm/test/resources/fsprocessor/test-templates-badfile/filewithnoreadperms.txt
 # this pull request through this branch will be needed to be reviewed as usual
 git remote rm origin
 git remote add origin $GITHUB_URL_SECURED
