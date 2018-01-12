@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/ibm-developer/java-codegen-common/compare/v2.4.0...v3.0.0) (2018-01-12)
+
+
+### Features
+
+* **lib:** Remove prompting and update logging ([5d36f2a](https://github.com/ibm-developer/java-codegen-common/commit/5d36f2a))
+* **test:** Add test for setOptions ([5f8aaa0](https://github.com/ibm-developer/java-codegen-common/commit/5f8aaa0))
+
+
+### BREAKING CHANGES
+
+* **lib:** Remove prompting, remove options, alter logging api
+
+Signed-off-by: Katherine Stanley <katheris@uk.ibm.com>
+
+
+
 <a name="2.4.0"></a>
 # [2.4.0](https://github.com/ibm-developer/java-codegen-common/compare/v2.3.0...v2.4.0) (2018-01-09)
 
