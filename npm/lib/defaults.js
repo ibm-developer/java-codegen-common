@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-//module for storing default configuration values for yeoman prompts
+//module for storing default configuration values for yeoman options
 // e.g. {appName : {desc : 'Name of the application', type : String, default : 'LibertyProject'}}
 'use strict';
 class Defaults {

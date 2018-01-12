@@ -16,33 +16,26 @@
 
 //module for logging capabilities, shared across the generator
 'use strict';
-let log = [];
+let log = console.log;
 const util = require('util');
+
+const setLogger = function(logger) {
+  log = logger
+}
 
 const writeToLog = function (header, data) {
   if (!data) {
-    log.push(header + " : undefined");
+    log(header + " : undefined");
     return;
   }
   if ((typeof data === 'string') || (typeof data === 'number') || (typeof data === 'boolean')) {
-    log.push(header + " : " + data);
+    log(header + " : " + data);
   } else {
-    log.push(header + " : " + util.inspect(data));
+    log(header + " : " + util.inspect(data));
   }
 }
 
-const getLogs = function () {
-  return log;
-}
-
-//clear any log entries
-const clear = function () {
-  log = [];
-}
-
 module.exports = {
-  //module doesn't export anything, all helpers are installed by requiring this module
   writeToLog: writeToLog,
-  getLogs: getLogs,
-  clear: clear
+  setLogger: setLogger
 }
