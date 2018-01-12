@@ -22,6 +22,8 @@ const fspath = require('path');
 const Handlebars = require('./helpers').handlebars;
 const logger = require('./log');
 
+const logId = require('../package.json').name + " : control";
+
 //determines if the passed relative path is a control file or not
 const CONTROL_FILE = "control.js";
 //determines if the passed relative path is a config file or not
@@ -68,7 +70,6 @@ Control.prototype.processProject = function() {
 
   //it does, so parse it in and run it through Handlebars
   let template = fs.readFileSync(file, 'utf8');
-  logger.writeToLog("Config data for controlBlock " + file, this.config);
   let compiledTemplate = Handlebars.compile(template);
   let output = compiledTemplate(this.config);
   try {
@@ -96,11 +97,10 @@ Control.prototype.processProject = function() {
       }
     }
   } catch (err) {
-    console.log("Error : " + this.path + ":" + output);
-    logger.writeToLog("Control block error : template", template);
+    logger.writeToLog(`${logId} : Control block error : template`, template);
     throw err;
   }
-  logger.writeToLog("Control data", this.controlBlock);
+  logger.writeToLog(`${logId} : Control data`, this.controlBlock);
 }
 
 //controls whether or not a file should be included in a generation

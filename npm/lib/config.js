@@ -27,6 +27,8 @@ const PATTERN_NAME = new RegExp("^[a-zA-Z0-9_-]+$");
 const PATTERN_ARTIFACT_ID = new RegExp("^[a-zA-Z0-9-_.]*$");
 const CONFIG_FILE = "config.js";
 
+const logId = require('../package.json').name + " : config";
+
 Config.prototype.isValid = function () {
   let value = this.appName;
   if (!value || !PATTERN_NAME.test(value) || (value.length > 50)) return false;
@@ -159,7 +161,6 @@ function Config(defaults) {
   this.processProject = function (paths) {
     for (let i = 0; i < paths.length; i++) {
       let file = fspath.resolve(paths[i], CONFIG_FILE);
-      logger.writeToLog('Processing config file ' + file + ' with config', this);
       if (fs.existsSync(file)) {
         this.configFiles.push(file);
       }
@@ -187,8 +188,8 @@ function Config(defaults) {
           }
         }
       } catch (err) {
-        console.error('Error reading ' + this.configFiles[i] + ' : ' + err);
-        console.error('code : ' + output);
+        logger.writeToLog(`${logId} : Error reading ` + this.configFiles[i] + ' : ' + err);
+        logger.writeToLog(`${logId} : code : ` + output);
         throw err;
       }
     }
