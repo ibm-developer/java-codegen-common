@@ -24,6 +24,7 @@ const extend = require('extend');
 const Config = require("./config");
 const Handlebars = require('./helpers').handlebars;
 
+const logId = require('../package.json').name + " : context";
 
 function Context(id, config) {
   this.id = id;
@@ -54,17 +55,15 @@ function Context(id, config) {
     if(!this.paths.length) {
       return;   //not being written by us
     }
-    this.logger.writeToLog("Destination path", generator.destinationRoot());
-    this.logger.writeToLog("Processor", this.processor);
+    this.logger.writeToLog(`${logId} : Destination path`, generator.destinationRoot());
     return this.processor.scan(this.conf, (relativePath, template) => {
       let outFile = generator.destinationPath(relativePath);
-      this.logger.writeToLog("CB : writing to", outFile);
       try {
         let compiledTemplate = Handlebars.compile(template);
         let output = compiledTemplate(this.conf);
         generator.fs.write(outFile, output);
       } catch (err) {
-        this.logger.writeToLog("Template error : " + relativePath, err.message);
+        this.logger.writeToLog(`${logId} : Template error : ` + relativePath, err.message);
       }
     }, this.paths);
   }
