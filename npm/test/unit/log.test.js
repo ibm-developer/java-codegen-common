@@ -22,32 +22,28 @@ const logger = require('../../lib/log');
 
 describe('logging module', function() {
 
-  describe('manage log entries', function() {
-    it('it should clear the log', function(){
-      logger.clear()
-      logger.writeToLog("Test", "Test");
-      logger.clear();
-      assert.equal(0, logger.getLogs().length);
-    });
-  });
-
   describe('can log different data types', function() {
+    let log = [];
+    let loggerFn = function(data) {
+      log.push(data)
+    }
+    logger.setLogger(loggerFn)
     it('it should log a String as is', function(){
-      logger.clear();
+      log = [];
       logger.writeToLog("Test", "This is a string");
-      assert.equal("Test : This is a string", logger.getLogs()[0]);
+      assert.equal("Test : This is a string", log[0]);
     });
     it('it should log an objects properties and method names', function(){
-      logger.clear();
+      log = [];
       logger.writeToLog("Test", {name : 'TestName', method : function(){}});
-      const data = logger.getLogs()[0];
+      const data = log[0];
       assert(data.indexOf('TestName') != -1);
       assert(data.indexOf('method') != -1);
     });
     it('it should log missing data as undefined', function(){
-      logger.clear();
+      log = [];
       logger.writeToLog("Test");
-      const data = logger.getLogs()[0];
+      const data = log[0];
       assert(data.indexOf('undefined') != -1);
     });
   });

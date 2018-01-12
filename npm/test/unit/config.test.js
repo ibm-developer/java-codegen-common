@@ -83,10 +83,6 @@ describe('Config defaults', function() {
     let config = new Config(require('../lib/defaults'));
     assert.equal('maven', config.buildType);
   });
-  it('promptType should be set to "prompt:patterns" when the promptType has not been set', function(){
-    let config = new Config(require('../lib/defaults'));
-    assert.equal('prompt:patterns', config.promptType);
-  });
   it('createType should be set to "basic" when the createType has not been set', function(){
     let config = new Config(require('../lib/defaults'));
     assert.equal('basic', config.createType);
@@ -102,16 +98,6 @@ describe('Config defaults', function() {
   it('version should be set to "1.0-SNAPSHOT" when the version has not been set', function(){
     let config = new Config(require('../lib/defaults'));
     assert.equal('1.0-SNAPSHOT', config.version);
-  });
-
-  it('headless should be set to "false" when the headless has not been set', function(){
-    let config = new Config(require('../lib/defaults'));
-    assert.equal('false', config.headless);
-  });
-
-  it('debug should be set to "false" when the debug has not been set', function(){
-    let config = new Config(require('../lib/defaults'));
-    assert.equal('false', config.debug);
   });
 
   it('bluemix should be set to "undefined" when the bluemix has not been set', function(){

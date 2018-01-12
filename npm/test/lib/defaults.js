@@ -20,15 +20,12 @@
 const DEFAULTS = {
   appName : {desc : 'Name of the application', type : String, default : 'LibertyProject'},
   buildType : {desc : 'Build system to use', type : String, default : 'maven'},
-  promptType : {desc : 'The prompts to use', type : String, default : 'prompt:patterns'},
   createType : {desc : 'Type of application to generate', type : String, default : 'basic'},
   groupId : {desc : 'Group ID to use for the build', type : String, default : 'liberty.projects'},
   artifactId : {desc : 'Artifact ID to use for the build', type : String, default : 'example'},
   version : {desc : 'Version of the application', type : String, default : '1.0-SNAPSHOT'},
-  headless : {desc : 'Run this generator headless i.e. driven by options only, no prompting', type : String, default : "false"},
-  debug : {desc : 'Generate a log.txt file in the root of the project', type : String, default : "false"},
   bluemix : {desc : 'Bluemix options', type : (value)=>{return toObject(value);}, default : undefined},
-  technologies : {desc : 'Technologies to configure when using the prompt:liberty promptType', type : (value)=>{return value;}, default : []}
+  technologies : {desc : 'Technologies to configure when using the createType "picnmix"', type : (value)=>{return value;}, default : []}
 };
 
 const getDefaultObject = function(name) {

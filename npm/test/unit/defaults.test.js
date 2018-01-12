@@ -23,7 +23,7 @@ const Defaults = require('../resources/defaults/defaults.js');
 const defaults = new Defaults();
 
 describe('Defaults module', function() {
-  describe('Call getDefault to get the default object', function() {
+  describe('Call getObject to get the default object', function() {
     let appName = defaults.getObject('appName');
     let buildType = defaults.getObject('buildType');
     it('can get the default value', function() {
@@ -39,11 +39,11 @@ describe('Defaults module', function() {
       assert.equal(buildType.type, String);
     });
   });
-  it('can use getDefaultValue to get the default value', function() {
+  it('can use get(<name>) to get the default value for name', function() {
     assert.equal(defaults.get('appName'), 'testName');
     assert.equal(defaults.get('buildType'), 'testBuildType');
   });
-  describe('Call getDefaults to get a list of config values with defaults', function() {
+  describe('Call get() to get a list of config values with defaults', function() {
     let defaultValues = defaults.get();
     let foundAppName = false;
     let foundBuildType = false;
@@ -61,5 +61,20 @@ describe('Defaults module', function() {
     it('finds buildType in the list of config values with defaults', function() {
       assert(foundBuildType);
     });
+  });
+  describe('Call setOptions sets the defaults on the generator options', function() {
+    let options = {}
+    let generator = {option: function(key, object) {
+      options[key] = object
+    }}
+    defaults.setOptions(generator)
+    it('sets appName on generator with correct default value', function() {
+      assert.equal(options.appName.default, 'testName')
+      assert.equal(options.appName.desc, 'Name of the application')
+    })
+    it('sets buildType on generator with correct default value', function() {
+      assert.equal(options.buildType.default, 'testBuildType')
+      assert.equal(options.buildType.desc, 'Build system to use')
+    })
   });
 })
