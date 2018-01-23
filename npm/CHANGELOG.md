@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.0.1"></a>
+## [3.0.1](https://github.com/ibm-developer/java-codegen-common/compare/v3.0.0...v3.0.1) (2018-01-23)
+
+
+### Bug Fixes
+
+* **log:** reduce the amount of logging now that it is displayed by default ([dfbd147](https://github.com/ibm-developer/java-codegen-common/commit/dfbd147))
+
+
+
 <a name="3.0.0"></a>
 # [3.0.0](https://github.com/ibm-developer/java-codegen-common/compare/v2.4.0...v3.0.0) (2018-01-12)
 
