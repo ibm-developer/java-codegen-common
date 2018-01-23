@@ -188,8 +188,8 @@ function Config(defaults) {
           }
         }
       } catch (err) {
-        logger.writeToLog(`${logId} : Error reading ` + this.configFiles[i] + ' : ' + err);
-        logger.writeToLog(`${logId} : code : ` + output);
+        logger.writeToLog(`${logId}:config - Error reading ` + this.configFiles[i] + ' : ' + err);
+        logger.writeToLog(`${logId}:config - code : ` + output);
         throw err;
       }
     }

@@ -97,10 +97,9 @@ Control.prototype.processProject = function() {
       }
     }
   } catch (err) {
-    logger.writeToLog(`${logId} : Control block error : template`, template);
+    logger.writeToLog(`${logId}:control -  Control block error in template`, template);
     throw err;
   }
-  logger.writeToLog(`${logId} : Control data`, this.controlBlock);
 }
 
 //controls whether or not a file should be included in a generation

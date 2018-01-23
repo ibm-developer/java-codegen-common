@@ -55,7 +55,7 @@ function Context(id, config) {
     if(!this.paths.length) {
       return;   //not being written by us
     }
-    this.logger.writeToLog(`${logId} : Destination path`, generator.destinationRoot());
+    this.logger.writeToLog(`${logId}:writing - Destination path`, generator.destinationRoot());
     return this.processor.scan(this.conf, (relativePath, template) => {
       let outFile = generator.destinationPath(relativePath);
       try {
@@ -63,7 +63,7 @@ function Context(id, config) {
         let output = compiledTemplate(this.conf);
         generator.fs.write(outFile, output);
       } catch (err) {
-        this.logger.writeToLog(`${logId} : Template error : ` + relativePath, err.message);
+        this.logger.writeToLog(`${logId}:writing - Template error : ` + relativePath, err.message);
       }
     }, this.paths);
   }

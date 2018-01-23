@@ -35,7 +35,7 @@ const dirwalk = function (root, tracker, resolver) {
     if (err) {
       //TODO : appscan for Java does not like you putting too much info in the error messages, need to check for JS
       console.error("There was an error reading the template directory");
-      logger.writeToLog(`${logId} : Folder error`, err);
+      logger.writeToLog(`${logId}:fsprocessor - Folder error`, err);
       resolver.reject(err);
       return;
     }
@@ -53,7 +53,7 @@ const dirwalk = function (root, tracker, resolver) {
           //console.log("Found file " + file + " : " + relativePath);
           if (err) {
             console.error("Error reading file ");
-            logger.writeToLog(`${logId} : File error`, err);
+            logger.writeToLog(`${logId}:fsprocessor - File error`, err);
             resolver.reject(err);
             return;
           }
@@ -141,12 +141,12 @@ const startWalk = function (config, cb, paths) {
 const getContentsSync = function (value) {
   let file = fspath.resolve(value);
   if (!fs.existsSync(file)) {
-    logger.writeToLog(`${logId} : Error : specified file does not exist`, file);
+    logger.writeToLog(`${logId}:fsprocessor - Error : specified file does not exist`, file);
     throw "Error : specified file does not exist";
   }
   let stats = fs.statSync(file);
   if (stats.isDirectory()) {
-    logger.writeToLog(`${logId} : Error : specified path is a directory`, file);
+    logger.writeToLog(`${logId}:fsprocessor - Error : specified path is a directory`, file);
     throw "Error : specified path is a directory";
   }
   try {
@@ -159,7 +159,7 @@ const getContentsSync = function (value) {
     }
   } catch (err) {
     /* istanbul ignore next */    //file error reading checked in other tests
-    logger.writeToLog(`${logId} : Error : reading : ` + file, err);
+    logger.writeToLog(`${logId}:fsprocessor - Error : reading : ` + file, err);
     /* istanbul ignore next */
     throw err;
   }
