@@ -1,6 +1,6 @@
 # IBM Java Codegen Common
 
-[![IBM Cloud powered][img-cloud-powered]][url-bluemix]
+[![IBM Cloud powered][img-cloud-powered]][url-cloud]
 [![Travis][img-travis-master]][url-travis-master]
 [![Coveralls][img-coveralls-master]][url-coveralls-master]
 [![Codacy][img-codacy]][url-codacy]
@@ -12,7 +12,7 @@
 
 
 [img-cloud-powered]: https://img.shields.io/badge/ibmcloud-powered-blue.svg
-[url-bluemix]: http://bluemix.net
+[url-cloud]: http://bluemix.net
 [url-npm]: https://www.npmjs.com/package/ibm-java-codegen-common
 [img-license]: https://img.shields.io/npm/l/ibm-java-codegen-common.svg
 [img-version]: https://img.shields.io/npm/v/ibm-java-codegen-common.svg
