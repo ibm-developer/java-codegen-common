@@ -17,3 +17,7 @@ script:
   - npm run coveralls
   - npm run testint
   - ../deploy.sh
+branches:
+  only:
+  - develop
+  - master
