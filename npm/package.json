@@ -9,17 +9,17 @@
   ],
   "dependencies": {
     "handlebars": "^4.0.0",
-    "yeoman-generator": "^1.0.0"
+    "yeoman-generator": "^3.1.1"
   },
   "devDependencies": {
+    "coveralls": "^3.0.2",
+    "eslint": "^5.5.0",
     "istanbul": "^0.4.5",
-    "mocha": "^3.2.0",
-    "standard-version": "^4.2.0",
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
+    "standard-version": "^4.4.0",
     "yeoman-assert": "^2.2.2",
-    "yeoman-test": "^1.6.0",
-    "eslint": "^4.2.0",
-    "nyc": "^11.3.0",
-    "coveralls": "^2.13.1"
+    "yeoman-test": "^2.0.0"
   },
   "scripts": {
     "test": "nyc mocha test/unit/*",
