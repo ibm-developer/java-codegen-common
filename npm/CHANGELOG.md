@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.0.4"></a>
+## [3.0.4](https://github.com/ibm-developer/java-codegen-common/compare/v3.0.3...v3.0.4) (2018-11-02)
+
+
+### Bug Fixes
+
+* Deprecated text in README ([6681e4f](https://github.com/ibm-developer/java-codegen-common/commit/6681e4f))
+
+
+
 <a name="3.0.3"></a>
 ## [3.0.3](https://github.com/ibm-developer/java-codegen-common/compare/v3.0.2...v3.0.3) (2018-08-22)
 
