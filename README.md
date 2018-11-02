@@ -1,3 +1,8 @@
+# This repository is deprecated. The common Java code has been merged into the Java generator at: 
+### https://github.com/ibm-developer/generator-ibm-java/generator-java/lib/common
+  
+<br/><br/>
+
 # Module for common Java code generation utilities
 [![Travis][img-travis-master]][url-travis-master]
 [![Coveralls][img-coveralls-master]][url-coveralls-master]
